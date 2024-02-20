@@ -9,6 +9,10 @@ export default {
       backgroundImage: {
         'search-form': "url('./public/img/d-udmurt2.webp')",
         'route-votkinsk': "url('./public/img/votkinsk.webp')",
+      },
+      backdropBrightness: {
+        25: '.25',
+        175: '1.75',
       }
     },
   },

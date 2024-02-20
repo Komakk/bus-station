@@ -16,49 +16,117 @@ export default function App() {
         </h1>
       </header>
       <main>
-        <section className=" px-6 py-9 bg-search-form bg-center bg-cover text-white">
-          <h2 className=" text-2xl font-medium drop-shadow-lg">Buy ticket</h2>
-          <form className=" flex flex-col ">
-            <label className="pt-6 drop-shadow-md font-medium">From</label>
-            <input
-              className=" text-gray-800 px-3 py-2"
-              type="text"
-              value={"Izhevsk"}
-            ></input>
-            <label className="pt-2 drop-shadow-md font-medium">To</label>
-            <input
-              className=" text-gray-800 px-3 py-2"
-              type="text"
-              value={"Mozhga"}
-            ></input>
-            <label className="pt-2 drop-shadow-md font-medium">
-              Departure date
-            </label>
-            <input
-              className=" text-gray-800 px-3 py-2"
-              value={"2024-02-18"}
-              type="date"
-            ></input>
-            <button className=" mt-8 px-3 py-2 bg-yellow-400" type="submit">
-              Search
-            </button>
-          </form>
+        <section className="bg-search-form bg-center bg-cover text-white">
+          <div className=" px-6 py-5 bg-sky-600/30">
+            <h2 className=" pl-2 text-2xl font-medium drop-shadow-lg">
+              Buy ticket
+            </h2>
+            <form className=" flex flex-col ">
+              <label className="pt-6 drop-shadow-md font-medium">From</label>
+              <input
+                className=" text-gray-800 px-3 py-2"
+                type="text"
+                value={"Izhevsk"}
+              ></input>
+              <label className="pt-2 drop-shadow-md font-medium">To</label>
+              <input
+                className=" text-gray-800 px-3 py-2"
+                type="text"
+                value={"Mozhga"}
+              ></input>
+              <label className="pt-2 drop-shadow-md font-medium">
+                Departure date
+              </label>
+              <input
+                className=" text-gray-800 px-3 py-2"
+                value={"2024-02-18"}
+                type="date"
+              ></input>
+              <button className=" mt-8 px-3 py-2 bg-yellow-400" type="submit">
+                Search
+              </button>
+            </form>
+          </div>
         </section>
         <section className=" px-4">
-          <h2 className=" mt-6 text-2xl text-blue-900 font-medium">
+          <h2 className=" mt-7 mb-6 text-2xl text-blue-900 font-medium">
             Popular destinations
           </h2>
-          <a className=" relative text-white text-xl font-bold block h-56 w-full bg-route-votkinsk bg-center bg-cover">
-            <span className=" absolute bottom-14 left-5">
-              <span className=" text-base">Izhevsk - </span>
+          <a className=" mt-6 relative text-white text-xl font-bold block h-56 w-full bg-route-votkinsk bg-center bg-cover">
+            <div className=" w-full h-full backdrop-brightness-75">
+              <span className=" absolute bottom-14 left-5">
+                <span className=" text-base">Izhevsk - </span>
+                <br />
+                Votkinsk
+              </span>
               <br />
-              Votkinsk
-            </span>
-            <br />
-            <span className=" absolute bottom-6 left-5 text-lg">
-              from 270 rub
-            </span>
+              <span className=" absolute bottom-6 left-5 text-lg">
+                from 270 rub
+              </span>
+            </div>
           </a>
+          <a className=" mt-6 relative text-white text-xl font-bold block h-56 w-full bg-route-votkinsk bg-center bg-cover">
+            <div className=" w-full h-full backdrop-brightness-75">
+              <span className=" absolute bottom-14 left-5">
+                <span className=" text-base">Izhevsk - </span>
+                <br />
+                Votkinsk
+              </span>
+              <br />
+              <span className=" absolute bottom-6 left-5 text-lg">
+                from 270 rub
+              </span>
+            </div>
+          </a>
+          <a className=" mt-6 relative text-white text-xl font-bold block h-56 w-full bg-route-votkinsk bg-center bg-cover">
+            <div className=" w-full h-full backdrop-brightness-75">
+              <span className=" absolute bottom-14 left-5">
+                <span className=" text-base">Izhevsk - </span>
+                <br />
+                Votkinsk
+              </span>
+              <br />
+              <span className=" absolute bottom-6 left-5 text-lg">
+                from 270 rub
+              </span>
+            </div>
+          </a>
+        </section>
+        <section>
+          <h2>Bus Station</h2>
+          <p>
+            We organize the sale of tickets for intercity, suburban and
+            interregional routes are more than 40 years old.
+          </p>
+          <p>In addition, we provide:</p>
+          <ol>
+            <li>
+              Advertising spaces (banners, banners, signs, information on
+              tickets, distribution of leaflets/business cards, as well as
+              advertising on our official website);
+            </li>
+            <li>
+              Premises for rent at bus stations and bus stations (office
+              premises, retail space, premises free use and land plots);
+            </li>
+            <li>Rent of buses for group charter transportation.</li>
+          </ol>
+          <p>
+            Every year, passengers turn to us to simply and safely issue travel
+            tickets. The company's employees ensure equal access to transport
+            services for citizens entitled to social support measures.
+          </p>
+        </section>
+        <section>
+          <p>
+            📞 Bus station information desk
+            <br />
+            <a href="tel:+73412908888" target="_blank">
+              +7 (3412) 90-88-88
+            </a>
+          </p>
+          <p>Head office</p>
+          <p>Izhevsk, Mayakovskogo Street, 47</p>
         </section>
       </main>
     </>
