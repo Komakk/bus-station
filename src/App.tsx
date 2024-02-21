@@ -92,14 +92,16 @@ export default function App() {
             </div>
           </a>
         </section>
-        <section>
-          <h2>Bus Station</h2>
-          <p>
+        <section className=" px-4">
+          <h2 className=" pt-5 pb-4 text-2xl text-blue-900 font-medium">
+            Bus Station
+          </h2>
+          <p className=" pb-3 text-gray-800">
             We organize the sale of tickets for intercity, suburban and
             interregional routes are more than 40 years old.
           </p>
-          <p>In addition, we provide:</p>
-          <ol>
+          <p className=" pb-3 text-gray-800">In addition, we provide:</p>
+          <ol className=" px-4 text-gray-800 list-decimal">
             <li>
               Advertising spaces (banners, banners, signs, information on
               tickets, distribution of leaflets/business cards, as well as
@@ -111,23 +113,39 @@ export default function App() {
             </li>
             <li>Rent of buses for group charter transportation.</li>
           </ol>
-          <p>
+          <p className=" pb-3 text-gray-800">
+            <br />
             Every year, passengers turn to us to simply and safely issue travel
             tickets. The company's employees ensure equal access to transport
             services for citizens entitled to social support measures.
           </p>
         </section>
-        <section>
-          <p>
-            📞 Bus station information desk
+        <section className="px-4 text-gray-800">
+          <p className=" pb-3 text-xl text-blue-700">
+            Bus station information desk
             <br />
-            <a href="tel:+73412908888" target="_blank">
+            <a
+              className=" text-base text-gray-800"
+              href="tel:+73412908888"
+              target="_blank"
+            >
               +7 (3412) 90-88-88
             </a>
           </p>
-          <p>Head office</p>
+          <p className="pb-3 text-xl text-blue-700">Head office</p>
           <p>Izhevsk, Mayakovskogo Street, 47</p>
         </section>
+        <aside className=" px-4 pt-6">
+          <button className=" py-4 mb-5 w-full block border border-blue-800">
+            Accessibility options
+          </button>
+          <button className=" py-4 mb-5 w-full block border border-blue-800">
+            Client support centre
+          </button>
+          <button className=" py-4 mb-5 w-full block border border-blue-800">
+            Feedbacks
+          </button>
+        </aside>
       </main>
     </>
   );
