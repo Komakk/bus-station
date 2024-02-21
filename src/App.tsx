@@ -121,7 +121,7 @@ export default function App() {
           </p>
         </section>
         <section className="px-4 text-gray-800">
-          <p className=" pb-3 text-xl text-blue-700">
+          <p className=" pb-3 text-xl text-blue-700 font-medium">
             Bus station information desk
             <br />
             <a
@@ -132,19 +132,26 @@ export default function App() {
               +7 (3412) 90-88-88
             </a>
           </p>
-          <p className="pb-3 text-xl text-blue-700">Head office</p>
+          <p className="pb-3 text-xl text-blue-700 font-medium">Head office</p>
           <p>Izhevsk, Mayakovskogo Street, 47</p>
         </section>
         <aside className=" px-4 pt-6">
-          <button className=" py-4 mb-5 w-full block border border-blue-800">
+          <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700 ">
             Accessibility options
           </button>
-          <button className=" py-4 mb-5 w-full block border border-blue-800">
+          <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700">
             Client support centre
           </button>
-          <button className=" py-4 mb-5 w-full block border border-blue-800">
+          <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700">
             Feedbacks
           </button>
+          <h2 className=" pb-4 text-xl text-blue-700">News</h2>
+          <div className=" mb-4   shadow-lg text-gray-800">
+            <p className=" p-3 border-2 border-slate-50">Some news title</p>
+            <p className=" py-2 px-4 bg-gray-100 text-xs text-gray-500">
+              21.02.2024
+            </p>
+          </div>
         </aside>
       </main>
     </>
