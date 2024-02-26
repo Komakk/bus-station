@@ -1,3 +1,5 @@
+import VKWidget from "./VKWidget";
+
 export default function App() {
   return (
     <>
@@ -176,13 +178,7 @@ export default function App() {
           <div className=" text-blue-700 text-center">
             <a>{"All news >>"}</a>
           </div>
-          <div id="vk_groups">
-            {VK.Widgets.Group(
-              "vk_groups",
-              { mode: 0, width: "auto", height: "400" },
-              154467839
-            )}
-          </div>
+          <VKWidget />
         </aside>
       </main>
     </>
