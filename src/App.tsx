@@ -1,4 +1,5 @@
 import VKWidget from "./VKWidget";
+import YandexMap from "./YandexMap";
 
 export default function App() {
   return (
@@ -178,8 +179,15 @@ export default function App() {
           <div className=" text-blue-700 text-center">
             <a>{"All news >>"}</a>
           </div>
-          <VKWidget />
+          <div className=" mt-5">
+            <VKWidget />
+          </div>
         </aside>
+        <footer>
+          <div className=" mt-20">
+            <YandexMap />
+          </div>
+        </footer>
       </main>
     </>
   );

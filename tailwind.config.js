@@ -9,6 +9,7 @@ export default {
       backgroundImage: {
         'search-form': "url('./public/img/d-udmurt2.webp')",
         'route-votkinsk': "url('./public/img/votkinsk.webp')",
+        'izhevsk': "url('img/izhevsk.png')",
       },
       backdropBrightness: {
         25: '.25',
