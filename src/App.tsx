@@ -183,12 +183,21 @@ export default function App() {
             <VKWidget />
           </div>
         </aside>
-        <footer>
-          <div className=" mt-20">
-            <YandexMap />
-          </div>
-        </footer>
       </main>
+      <footer>
+        <div className=" mt-20">
+          <YandexMap />
+        </div>
+        <div className=" pt-7 px-5 bg-gray-100">
+          <div className=" pb-5">
+            <p className=" text-gray-500">Technical support</p>
+            <a className=" text-2xl text-blue-700" href="tel:8 800 600-03-38">
+              8 800 600-03-38
+            </a>
+          </div>
+          <div className=" mt-5 mb-5 border border-gray-300"></div>
+        </div>
+      </footer>
     </>
   );
 }
