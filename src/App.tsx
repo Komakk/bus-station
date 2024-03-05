@@ -18,6 +18,38 @@ export default function App() {
           Bus Station
         </h1>
       </header>
+      <div className=" fixed w-4/5 h-full top-0 bg-white z-50">
+        <div className=" p-8 h-24 bg-blue-700 text-center text-white">
+          <a className=" underline cursor-pointer">Sign in</a>
+          {` ${"\u00A0"} | ${"\u00A0"} `}
+          <a className=" underline cursor-pointer">Sign up</a>
+        </div>
+        <div className=" py-4 px-5 border-b flex ">
+          <a className=" cursor-pointer hover:underline">
+            <p>Search trip</p>
+            <p className=" text-xs text-gray-500">and buying tickets</p>
+          </a>
+        </div>
+        <nav className=" py-4 px-5">
+          <ul>
+            <li>
+              <div className=" flex justify-between items-center">
+                <span>Services</span>
+                <div className="  text-2xl">
+                  {"\u229F"}
+                  {"\u229E"}
+                </div>
+              </div>
+              <ul className=" px-5">
+                <li>Advertisement</li>
+                <li>Rent</li>
+                <li>Cooperation</li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div className=" fixed top-0 left-0 w-full h-full z-40 backdrop-brightness-50"></div>
       <main>
         <section className="bg-search-form bg-center bg-cover text-white">
           <div className=" px-6 py-5 bg-sky-600/30">
@@ -188,14 +220,60 @@ export default function App() {
         <div className=" mt-20">
           <YandexMap />
         </div>
-        <div className=" pt-7 px-5 bg-gray-100">
+        <div className=" pt-7 px-5 pb-4 bg-gray-100">
           <div className=" pb-5">
             <p className=" text-gray-500">Technical support</p>
             <a className=" text-2xl text-blue-700" href="tel:8 800 600-03-38">
               8 800 600-03-38
             </a>
           </div>
-          <div className=" mt-5 mb-5 border border-gray-300"></div>
+          <hr className=" mt-5 mb-5" />
+          <div>
+            <a className=" mr-8 mb-4 inline-block cursor-pointer hover:underline">
+              Requisites
+            </a>
+            <a className=" mr-8 mb-4 inline-block cursor-pointer hover:underline">
+              Terms of use
+            </a>
+            <a className="mb-4 inline-block cursor-pointer hover:underline">
+              Privacy Policy
+            </a>
+            <div className=" mt-3 flex">
+              <a className="cursor-pointer">
+                <img
+                  className=" h-11 mr-5 mb-6"
+                  src="./public/app-store.webp"
+                />
+              </a>
+              <a className="cursor-pointer">
+                <img
+                  className=" h-11 mr-5 mb-6"
+                  src="./public/google-play.webp"
+                />
+              </a>
+            </div>
+          </div>
+          <div>
+            <hr className=" mb-4" />
+            <p className=" mb-4 text-gray-400">
+              We use the information recorded{" "}
+              <a
+                className=" text-blue-700 cursor-pointer hover:underline"
+                href=""
+              >
+                in cookies
+              </a>
+              , in particular for advertising and statistical purposes, and to
+              tailor our websites to the individual needs of Users. You can
+              change the settings regarding cookies in your browser. Changing
+              settings may limit the functionality of the site.
+            </p>
+            <hr className=" mb-4" />
+            <p className=" text-gray-400">
+              © 2013-2024, ООО "Капитал"- Онлайн сервис продажи билетов На
+              автобус
+            </p>
+          </div>
         </div>
       </footer>
     </>
