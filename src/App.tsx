@@ -1,3 +1,4 @@
+import ListItem from "./ListItem";
 import VKWidget from "./VKWidget";
 import YandexMap from "./YandexMap";
 
@@ -18,7 +19,7 @@ export default function App() {
           Bus Station
         </h1>
       </header>
-      <div className=" fixed w-4/5 h-full top-0 bg-white z-50">
+      <div className=" fixed overflow-auto w-4/5 h-full top-0 bg-white z-50">
         <div className=" p-8 h-24 bg-blue-700 text-center text-white">
           <a className=" underline cursor-pointer">Sign in</a>
           {` ${"\u00A0"} | ${"\u00A0"} `}
@@ -32,22 +33,31 @@ export default function App() {
         </div>
         <nav className=" py-4 px-5">
           <ul>
-            <li>
-              <div className=" flex justify-between items-center">
-                <span>Services</span>
-                <div className="  text-2xl">
-                  {"\u229F"}
-                  {"\u229E"}
-                </div>
-              </div>
-              <ul className=" px-5">
-                <li>Advertisement</li>
-                <li>Rent</li>
-                <li>Cooperation</li>
-              </ul>
-            </li>
+            <ListItem
+              title="Services"
+              src="/#"
+              innerList={["Advertisement", "Rent", "Cooperation"]}
+            />
+            <ListItem
+              title="About"
+              src="/#"
+              innerList={["Management and stations", "Vacancies", "News"]}
+            />
+            <ListItem
+              title="Passenger Service"
+              src="/#"
+              innerList={[
+                "Boarding and ticket return",
+                "Ticket reservation",
+                "Trip rules",
+                "Passenger insurance",
+              ]}
+            />
+            <ListItem title="Contacts" src="/#" />
+            <ListItem title="Schedule" src="/#" />
           </ul>
         </nav>
+        <div className=" fixed w-4/5 bottom-0 p-2 bg-slate-400"></div>
       </div>
       <div className=" fixed top-0 left-0 w-full h-full z-40 backdrop-brightness-50"></div>
       <main>
