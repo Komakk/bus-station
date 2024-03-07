@@ -1,12 +1,20 @@
+import { useState } from "react";
 import ListItem from "./ListItem";
 import VKWidget from "./VKWidget";
 import YandexMap from "./YandexMap";
+import PopRouteItem from "./assets/components/PopRouteItem";
 
 export default function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  console.log(isSidebarOpen);
+
   return (
     <>
       <header className="flex items-center justify-center h-14 ">
-        <button className=" absolute left-5 text-gray-500">
+        <button
+          className=" absolute left-5 text-gray-500"
+          onClick={() => setIsSidebarOpen(true)}
+        >
           <svg className=" h-10 w-10 fill-current" viewBox="0 0 24 24">
             <path
               fill-rule="evenodd"
@@ -19,7 +27,11 @@ export default function App() {
           Bus Station
         </h1>
       </header>
-      <div className=" fixed overflow-auto w-4/5 h-full top-0 bg-white z-50">
+      <div
+        className={`fixed overflow-auto w-4/5 h-full top-0 bg-white z-50 ${
+          isSidebarOpen ? "" : "hidden"
+        }`}
+      >
         <div className=" p-8 h-24 bg-blue-700 text-center text-white">
           <a className=" underline cursor-pointer">Sign in</a>
           {` ${"\u00A0"} | ${"\u00A0"} `}
@@ -31,7 +43,7 @@ export default function App() {
             <p className=" text-xs text-gray-500">and buying tickets</p>
           </a>
         </div>
-        <nav className=" py-4 px-5">
+        <nav className=" py-4 px-5 pb-24">
           <ul>
             <ListItem
               title="Services"
@@ -57,9 +69,21 @@ export default function App() {
             <ListItem title="Schedule" src="/#" />
           </ul>
         </nav>
-        <div className=" fixed w-4/5 bottom-0 p-2 bg-slate-400"></div>
+        <div className=" fixed w-4/5 bottom-0 p-2">
+          <a className=" p-2 w-full block text-center bg-green-500 text-white cursor-pointer hover:bg-green-600">
+            MOBILE APPLICATION
+          </a>
+          <a className=" p-2 mt-1 w-full block text-center bg-yellow-500 text-white cursor-pointer hover:bg-green-700">
+            SUPPORT
+          </a>
+        </div>
       </div>
-      <div className=" fixed top-0 left-0 w-full h-full z-40 backdrop-brightness-50"></div>
+      <div
+        className={`fixed top-0 left-0 w-full h-full z-40 backdrop-brightness-50 ${
+          isSidebarOpen ? "" : "hidden"
+        }`}
+        onClick={() => setIsSidebarOpen(false)}
+      ></div>
       <main>
         <section className="bg-search-form bg-center bg-cover text-white">
           <div className=" px-6 py-5 bg-sky-600/30">
@@ -97,45 +121,9 @@ export default function App() {
           <h2 className=" mt-7 mb-6 text-2xl text-blue-900 font-medium">
             Popular destinations
           </h2>
-          <a className=" mt-6 relative text-white text-xl font-bold block h-56 w-full bg-route-votkinsk bg-center bg-cover">
-            <div className=" w-full h-full backdrop-brightness-75">
-              <span className=" absolute bottom-14 left-5">
-                <span className=" text-base">Izhevsk - </span>
-                <br />
-                Votkinsk
-              </span>
-              <br />
-              <span className=" absolute bottom-6 left-5 text-lg">
-                from 270 rub
-              </span>
-            </div>
-          </a>
-          <a className=" mt-6 relative text-white text-xl font-bold block h-56 w-full bg-route-votkinsk bg-center bg-cover">
-            <div className=" w-full h-full backdrop-brightness-75">
-              <span className=" absolute bottom-14 left-5">
-                <span className=" text-base">Izhevsk - </span>
-                <br />
-                Votkinsk
-              </span>
-              <br />
-              <span className=" absolute bottom-6 left-5 text-lg">
-                from 270 rub
-              </span>
-            </div>
-          </a>
-          <a className=" mt-6 relative text-white text-xl font-bold block h-56 w-full bg-route-votkinsk bg-center bg-cover">
-            <div className=" w-full h-full backdrop-brightness-75">
-              <span className=" absolute bottom-14 left-5">
-                <span className=" text-base">Izhevsk - </span>
-                <br />
-                Votkinsk
-              </span>
-              <br />
-              <span className=" absolute bottom-6 left-5 text-lg">
-                from 270 rub
-              </span>
-            </div>
-          </a>
+          <PopRouteItem />
+          <PopRouteItem />
+          <PopRouteItem />
         </section>
         <section className=" px-4">
           <h2 className=" pt-5 pb-4 text-2xl text-blue-900 font-medium">
