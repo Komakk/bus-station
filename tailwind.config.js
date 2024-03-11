@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      spacing: {
+        '200': '46rem'
+      },
       backgroundImage: {
         'search-form': "url('./public/img/d-udmurt2.webp')",
         'route-votkinsk': "url('./public/img/votkinsk.webp')",

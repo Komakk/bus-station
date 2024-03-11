@@ -1,131 +1,69 @@
-import { useState } from "react";
-import ListItem from "./ListItem";
 import VKWidget from "./VKWidget";
 import YandexMap from "./YandexMap";
-import PopRouteItem from "./assets/components/PopRouteItem";
+import Navigation from "./components/Navigation";
+import PopRouteItem from "./components/PopRouteItem";
 
 export default function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  console.log(isSidebarOpen);
-
   return (
     <>
-      <header className="flex items-center justify-center h-14 ">
-        <button
-          className=" absolute left-5 text-gray-500"
-          onClick={() => setIsSidebarOpen(true)}
-        >
-          <svg className=" h-10 w-10 fill-current" viewBox="0 0 24 24">
-            <path
-              fill-rule="evenodd"
-              d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
-            />
-          </svg>
-        </button>
-
-        <h1 className=" text-2xl uppercase text-blue-700 font-light">
-          Bus Station
-        </h1>
-      </header>
-      <div
-        className={`fixed overflow-auto w-4/5 h-full top-0 bg-white z-50 ${
-          isSidebarOpen ? "" : "hidden"
-        }`}
-      >
-        <div className=" p-8 h-24 bg-blue-700 text-center text-white">
-          <a className=" underline cursor-pointer">Sign in</a>
-          {` ${"\u00A0"} | ${"\u00A0"} `}
-          <a className=" underline cursor-pointer">Sign up</a>
-        </div>
-        <div className=" py-4 px-5 border-b flex ">
-          <a className=" cursor-pointer hover:underline">
-            <p>Search trip</p>
-            <p className=" text-xs text-gray-500">and buying tickets</p>
-          </a>
-        </div>
-        <nav className=" py-4 px-5 pb-24">
-          <ul>
-            <ListItem
-              title="Services"
-              src="/#"
-              innerList={["Advertisement", "Rent", "Cooperation"]}
-            />
-            <ListItem
-              title="About"
-              src="/#"
-              innerList={["Management and stations", "Vacancies", "News"]}
-            />
-            <ListItem
-              title="Passenger Service"
-              src="/#"
-              innerList={[
-                "Boarding and ticket return",
-                "Ticket reservation",
-                "Trip rules",
-                "Passenger insurance",
-              ]}
-            />
-            <ListItem title="Contacts" src="/#" />
-            <ListItem title="Schedule" src="/#" />
-          </ul>
-        </nav>
-        <div className=" fixed w-4/5 bottom-0 p-2">
-          <a className=" p-2 w-full block text-center bg-green-500 text-white cursor-pointer hover:bg-green-600">
-            MOBILE APPLICATION
-          </a>
-          <a className=" p-2 mt-1 w-full block text-center bg-yellow-500 text-white cursor-pointer hover:bg-green-700">
-            SUPPORT
-          </a>
-        </div>
-      </div>
-      <div
-        className={`fixed top-0 left-0 w-full h-full z-40 backdrop-brightness-50 ${
-          isSidebarOpen ? "" : "hidden"
-        }`}
-        onClick={() => setIsSidebarOpen(false)}
-      ></div>
+      <Navigation />
       <main>
-        <section className="bg-search-form bg-center bg-cover text-white">
-          <div className=" px-6 py-5 bg-sky-600/30">
+        <section className="bg-search-form bg-center bg-cover text-white  md:pt-20 md:pb-7">
+          <div className="  py-5 bg-sky-800/30 md:bg-sky-800/70 md:w-5/6 md:mx-auto md:border-t-4 border-blue-400">
             <h2 className=" pl-2 text-2xl font-medium drop-shadow-lg">
               Buy ticket
             </h2>
-            <form className=" flex flex-col ">
-              <label className="pt-6 drop-shadow-md font-medium">From</label>
-              <input
-                className=" text-gray-800 px-3 py-2"
-                type="text"
-                value={"Izhevsk"}
-              ></input>
-              <label className="pt-2 drop-shadow-md font-medium">To</label>
-              <input
-                className=" text-gray-800 px-3 py-2"
-                type="text"
-                value={"Mozhga"}
-              ></input>
-              <label className="pt-2 drop-shadow-md font-medium">
-                Departure date
-              </label>
-              <input
-                className=" text-gray-800 px-3 py-2"
-                value={"2024-02-18"}
-                type="date"
-              ></input>
-              <button className=" mt-8 px-3 py-2 bg-yellow-400" type="submit">
-                Search
-              </button>
+            <form className="">
+              <div className="mt-5 px-5 md:w-1/2 md:inline-block">
+                <label className=" drop-shadow-md font-medium">From</label>
+                <input
+                  className="w-full text-gray-800 px-3 py-2"
+                  type="text"
+                  value={"Izhevsk"}
+                ></input>
+              </div>
+
+              <div className=" mt-2 px-5 md:w-1/2 md:inline-block">
+                <label className=" drop-shadow-md font-medium">To</label>
+                <input
+                  className="w-full text-gray-800 px-3 py-2"
+                  type="text"
+                  value={"Mozhga"}
+                ></input>
+              </div>
+              <div className="mt-2 px-5 md:w-1/2 md:inline-block">
+                <label className=" drop-shadow-md font-medium">
+                  Departure date
+                </label>
+                <input
+                  className="w-full text-gray-800 px-3 py-2"
+                  value={"2024-02-18"}
+                  type="date"
+                ></input>
+              </div>
+              <div className="mt-5 px-5 md:w-1/2 md:inline-block">
+                <button
+                  className=" px-3 py-2 w-full bg-yellow-400"
+                  type="submit"
+                >
+                  Search
+                </button>
+              </div>
             </form>
           </div>
         </section>
-        <section className=" px-4">
-          <h2 className=" mt-7 mb-6 text-2xl text-blue-900 font-medium">
+        <section className=" px-4 sm:px-1 md:w-200 md:mx-auto">
+          <h2 className=" mt-7 mb-6 sm:pl-3 text-2xl text-blue-900 font-medium">
             Popular destinations
           </h2>
           <PopRouteItem />
           <PopRouteItem />
           <PopRouteItem />
+          <PopRouteItem />
+          <PopRouteItem />
+          <PopRouteItem />
         </section>
-        <section className=" px-4">
+        <section className=" px-4 md:w-200 md:mx-auto">
           <h2 className=" pt-5 pb-4 text-2xl text-blue-900 font-medium">
             Bus Station
           </h2>
@@ -153,7 +91,7 @@ export default function App() {
             services for citizens entitled to social support measures.
           </p>
         </section>
-        <section className="px-4 text-gray-800">
+        <section className="px-4 text-gray-800 md:w-200 md:mx-auto">
           <p className=" pb-3 text-xl text-blue-700 font-medium">
             Bus station information desk
             <br />
@@ -168,7 +106,7 @@ export default function App() {
           <p className="pb-3 text-xl text-blue-700 font-medium">Head office</p>
           <p>Izhevsk, Mayakovskogo Street, 47</p>
         </section>
-        <aside className=" px-4 pt-6">
+        <aside className=" px-4 pt-6 md:w-200 md:mx-auto">
           <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700 ">
             <img
               className=" inline-block mr-1"
@@ -218,59 +156,61 @@ export default function App() {
         <div className=" mt-20">
           <YandexMap />
         </div>
-        <div className=" pt-7 px-5 pb-4 bg-gray-100">
-          <div className=" pb-5">
-            <p className=" text-gray-500">Technical support</p>
-            <a className=" text-2xl text-blue-700" href="tel:8 800 600-03-38">
-              8 800 600-03-38
-            </a>
-          </div>
-          <hr className=" mt-5 mb-5" />
-          <div>
-            <a className=" mr-8 mb-4 inline-block cursor-pointer hover:underline">
-              Requisites
-            </a>
-            <a className=" mr-8 mb-4 inline-block cursor-pointer hover:underline">
-              Terms of use
-            </a>
-            <a className="mb-4 inline-block cursor-pointer hover:underline">
-              Privacy Policy
-            </a>
-            <div className=" mt-3 flex">
-              <a className="cursor-pointer">
-                <img
-                  className=" h-11 mr-5 mb-6"
-                  src="./public/app-store.webp"
-                />
-              </a>
-              <a className="cursor-pointer">
-                <img
-                  className=" h-11 mr-5 mb-6"
-                  src="./public/google-play.webp"
-                />
+        <div className="  bg-gray-100 ">
+          <div className="pt-7 px-5 pb-4 md:w-200 md:mx-auto">
+            <div className=" pb-5">
+              <p className=" text-gray-500">Technical support</p>
+              <a className=" text-2xl text-blue-700" href="tel:8 800 600-03-38">
+                8 800 600-03-38
               </a>
             </div>
-          </div>
-          <div>
-            <hr className=" mb-4" />
-            <p className=" mb-4 text-gray-400">
-              We use the information recorded{" "}
-              <a
-                className=" text-blue-700 cursor-pointer hover:underline"
-                href=""
-              >
-                in cookies
+            <hr className=" mt-5 mb-5" />
+            <div>
+              <a className=" mr-8 mb-4 inline-block cursor-pointer hover:underline">
+                Requisites
               </a>
-              , in particular for advertising and statistical purposes, and to
-              tailor our websites to the individual needs of Users. You can
-              change the settings regarding cookies in your browser. Changing
-              settings may limit the functionality of the site.
-            </p>
-            <hr className=" mb-4" />
-            <p className=" text-gray-400">
-              © 2013-2024, ООО "Капитал"- Онлайн сервис продажи билетов На
-              автобус
-            </p>
+              <a className=" mr-8 mb-4 inline-block cursor-pointer hover:underline">
+                Terms of use
+              </a>
+              <a className="mb-4 inline-block cursor-pointer hover:underline">
+                Privacy Policy
+              </a>
+              <div className=" mt-3 flex">
+                <a className="cursor-pointer">
+                  <img
+                    className=" h-11 mr-5 mb-6"
+                    src="./public/app-store.webp"
+                  />
+                </a>
+                <a className="cursor-pointer">
+                  <img
+                    className=" h-11 mr-5 mb-6"
+                    src="./public/google-play.webp"
+                  />
+                </a>
+              </div>
+            </div>
+            <div>
+              <hr className=" mb-4" />
+              <p className=" mb-4 text-gray-400">
+                We use the information recorded{" "}
+                <a
+                  className=" text-blue-700 cursor-pointer hover:underline"
+                  href=""
+                >
+                  in cookies
+                </a>
+                , in particular for advertising and statistical purposes, and to
+                tailor our websites to the individual needs of Users. You can
+                change the settings regarding cookies in your browser. Changing
+                settings may limit the functionality of the site.
+              </p>
+              <hr className=" mb-4" />
+              <p className=" text-gray-400">
+                © 2013-2024, ООО "Капитал"- Онлайн сервис продажи билетов На
+                автобус
+              </p>
+            </div>
           </div>
         </div>
       </footer>
