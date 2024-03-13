@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       spacing: {
-        '200': '46rem'
+        '200': '46rem',
+        '220': '61rem'
       },
       backgroundImage: {
         'search-form': "url('./public/img/d-udmurt2.webp')",

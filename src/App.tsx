@@ -52,7 +52,7 @@ export default function App() {
             </form>
           </div>
         </section>
-        <section className=" px-4 sm:px-1 md:w-200 md:mx-auto">
+        <section className=" px-4 sm:px-1 md:w-200 lg:w-220 mx-auto">
           <h2 className=" mt-7 mb-6 sm:pl-3 text-2xl text-blue-900 font-medium">
             Popular destinations
           </h2>
@@ -63,7 +63,7 @@ export default function App() {
           <PopRouteItem />
           <PopRouteItem />
         </section>
-        <section className=" px-4 md:w-200 md:mx-auto">
+        <section className=" px-4 md:w-200 lg:w-220 mx-auto">
           <h2 className=" pt-5 pb-4 text-2xl text-blue-900 font-medium">
             Bus Station
           </h2>
@@ -91,7 +91,7 @@ export default function App() {
             services for citizens entitled to social support measures.
           </p>
         </section>
-        <section className="px-4 text-gray-800 md:w-200 md:mx-auto">
+        <section className="px-4 text-gray-800 md:w-200 lg:w-220 mx-auto">
           <p className=" pb-3 text-xl text-blue-700 font-medium">
             Bus station information desk
             <br />
@@ -106,7 +106,7 @@ export default function App() {
           <p className="pb-3 text-xl text-blue-700 font-medium">Head office</p>
           <p>Izhevsk, Mayakovskogo Street, 47</p>
         </section>
-        <aside className=" px-4 pt-6 md:w-200 md:mx-auto">
+        <aside className=" px-4 pt-6 md:w-200 lg:w-220 mx-auto">
           <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700 ">
             <img
               className=" inline-block mr-1"
@@ -157,7 +157,7 @@ export default function App() {
           <YandexMap />
         </div>
         <div className="  bg-gray-100 ">
-          <div className="pt-7 px-5 pb-4 md:w-200 md:mx-auto">
+          <div className="pt-7 px-5 pb-4 md:w-200 lg:w-220 mx-auto">
             <div className=" pb-5">
               <p className=" text-gray-500">Technical support</p>
               <a className=" text-2xl text-blue-700" href="tel:8 800 600-03-38">

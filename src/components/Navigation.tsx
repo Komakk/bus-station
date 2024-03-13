@@ -1,12 +1,82 @@
 import { useState } from "react";
 import ListItem from "./ListItem";
+import NavListItem from "./NavListItem";
+
+const navList = [
+  {
+    title: "Services",
+    src: "/#",
+    innerList: [
+      {
+        title: "Advertisement",
+        src: "/#",
+      },
+      {
+        title: "Rent",
+        src: "/#",
+      },
+      {
+        title: "Cooperation",
+        src: "/#",
+      },
+    ],
+  },
+  {
+    title: "About",
+    src: "/#",
+    innerList: [
+      {
+        title: "Management and stations",
+        src: "/#",
+      },
+      {
+        title: "Vacancies",
+        src: "/#",
+      },
+      {
+        title: "News",
+        src: "/#",
+      },
+    ],
+  },
+  {
+    title: "Passenger Service",
+    src: "/#",
+    innerList: [
+      {
+        title: "Boarding and ticket return",
+        src: "/#",
+      },
+      {
+        title: "Ticket reservation",
+        src: "/#",
+      },
+      {
+        title: "Trip rules",
+        src: "/#",
+      },
+      {
+        title: "Passanger insurance",
+        src: "/#",
+      },
+    ],
+  },
+  {
+    title: "Contacts",
+    src: "/#",
+  },
+  {
+    title: "Schedule",
+    src: "/#",
+  },
+];
 
 export default function Navigation() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <>
-      <header className="flex relative items-center justify-center h-14 md:w-200 md:mx-auto">
+      <header className="mx-auto flex relative items-center justify-center lg:justify-between h-14 md:w-200 lg:w-220">
         <button
           className=" absolute left-5 text-gray-500 lg:hidden"
           onClick={() => setIsSidebarOpen(true)}
@@ -20,23 +90,21 @@ export default function Navigation() {
         </button>
 
         <a
-          className="  text-2xl uppercase text-blue-700 font-light cursor-pointer hover:text-gray-600 "
+          className=" px-2 text-2xl uppercase text-blue-700 font-light cursor-pointer hover:text-gray-600 "
           href="#"
         >
           <img className=" mr-2 w-10 inline-block " src="./public/logo.png" />
           <span className=" align-middle">Bus Station</span>
         </a>
-        <nav>
+        <nav className=" px-2 hidden lg:block">
           <ul>
-            <li className=" px-2 inline-block text-sm text-gray-400 uppercase">
-              Services
-            </li>
-            <li className=" px-2 inline-block text-sm text-gray-400 uppercase">
-              About
-            </li>
-            <li className=" px-2 inline-block text-sm text-gray-400 uppercase">
-              About
-            </li>
+            {navList.map((item) => (
+              <NavListItem
+                title={item.title}
+                src={item.src}
+                innerList={item.innerList}
+              />
+            ))}
           </ul>
         </nav>
       </header>
