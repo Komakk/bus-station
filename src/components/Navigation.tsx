@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ListItem from "./ListItem";
 import NavListItem from "./NavListItem";
+import SidebarListItem from "./SidebarListItem";
 
 const navList = [
   {
@@ -83,7 +83,7 @@ export default function Navigation() {
         >
           <svg className=" h-10 w-10 fill-current" viewBox="0 0 24 24">
             <path
-              fill-rule="evenodd"
+              fillRule="evenodd"
               d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
             />
           </svg>
@@ -100,6 +100,7 @@ export default function Navigation() {
           <ul>
             {navList.map((item) => (
               <NavListItem
+                key={item.title}
                 title={item.title}
                 src={item.src}
                 innerList={item.innerList}
@@ -109,7 +110,7 @@ export default function Navigation() {
         </nav>
       </header>
       <div
-        className={`fixed overflow-auto w-4/5 h-full top-0 bg-white z-50 ${
+        className={`fixed overflow-auto w-4/5 h-full top-0 bg-white z-40 ${
           isSidebarOpen ? "" : "hidden"
         }`}
       >
@@ -126,7 +127,15 @@ export default function Navigation() {
         </div>
         <nav className=" py-4 px-5 pb-24">
           <ul>
-            <ListItem
+            {navList.map((item) => (
+              <SidebarListItem
+                key={item.title}
+                title={item.title}
+                src={item.src}
+                innerList={item.innerList}
+              />
+            ))}
+            {/* <ListItem
               title="Services"
               src="/#"
               innerList={["Advertisement", "Rent", "Cooperation"]}
@@ -147,7 +156,7 @@ export default function Navigation() {
               ]}
             />
             <ListItem title="Contacts" src="/#" />
-            <ListItem title="Schedule" src="/#" />
+            <ListItem title="Schedule" src="/#" /> */}
           </ul>
         </nav>
         <div className=" fixed w-4/5 bottom-0 p-2">
@@ -160,7 +169,7 @@ export default function Navigation() {
         </div>
       </div>
       <div
-        className={`fixed top-0 left-0 w-full h-full z-40 backdrop-brightness-50 ${
+        className={`fixed top-0 left-0 w-full h-full z-30 backdrop-brightness-50 ${
           isSidebarOpen ? "" : "hidden"
         }`}
         onClick={() => setIsSidebarOpen(false)}

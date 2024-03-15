@@ -15,10 +15,13 @@ export default function NavListItem({
         {title}
       </a>
       {innerList && (
-        <ul className=" hidden group-hover:block absolute top-14 bg-gray-100 text-gray-500 min-w-28">
+        <ul className=" hidden group-hover:block absolute top-14 bg-gray-100 text-gray-500 min-w-28 z-50">
           {innerList.map((item) => (
             <li key={item.title} className=" hover:bg-gray-300 ">
-              <a className=" px-3 leading-9 text-base" href={item.src}>
+              <a
+                className=" px-3 w-full h-full block leading-9 text-base"
+                href={item.src}
+              >
                 {item.title}
               </a>
             </li>

@@ -1,12 +1,16 @@
 import { useState } from "react";
 
-interface ListItemProps {
+interface SidebarListItemProps {
   title: string;
   src: string;
-  innerList?: string[];
+  innerList?: { title: string; src: string }[];
 }
 
-export default function ListItem({ title, src, innerList }: ListItemProps) {
+export default function SidebarListItem({
+  title,
+  src,
+  innerList,
+}: SidebarListItemProps) {
   const [isInnerListHidden, setIsInnerListHidden] = useState(true);
   const innerListStyle = isInnerListHidden ? "px-5 hidden" : "px-5 block";
   return (
@@ -26,9 +30,9 @@ export default function ListItem({ title, src, innerList }: ListItemProps) {
       <ul className={innerListStyle}>
         {innerList &&
           innerList.map((item) => (
-            <li key={item}>
-              <a className=" mb-4 block" href="/#">
-                {item}
+            <li key={item.title}>
+              <a className=" mb-4 block" href={item.src}>
+                {item.title}
               </a>
             </li>
           ))}
