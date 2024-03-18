@@ -64,105 +64,115 @@ export default function App() {
             </form>
           </div>
         </section>
-        <section className=" px-4 sm:px-1 md:w-200 lg:w-220 mx-auto">
-          <h2 className=" mt-7 mb-6 sm:pl-3 text-2xl text-blue-900 font-medium">
-            Popular destinations
-          </h2>
-          <PopRouteItem />
-          <PopRouteItem />
-          <PopRouteItem />
-          <PopRouteItem />
-          <PopRouteItem />
-          <PopRouteItem />
-        </section>
-        <section className=" px-4 md:w-200 lg:w-220 mx-auto">
-          <h2 className=" pt-5 pb-4 text-2xl text-blue-900 font-medium">
-            Bus Station
-          </h2>
-          <p className=" pb-3 text-gray-800">
-            We organize the sale of tickets for intercity, suburban and
-            interregional routes are more than 40 years old.
-          </p>
-          <p className=" pb-3 text-gray-800">In addition, we provide:</p>
-          <ol className=" px-4 text-gray-800 list-decimal">
-            <li>
-              Advertising spaces (banners, banners, signs, information on
-              tickets, distribution of leaflets/business cards, as well as
-              advertising on our official website);
-            </li>
-            <li>
-              Premises for rent at bus stations and bus stations (office
-              premises, retail space, premises free use and land plots);
-            </li>
-            <li>Rent of buses for group charter transportation.</li>
-          </ol>
-          <p className=" pb-3 text-gray-800">
-            <br />
-            Every year, passengers turn to us to simply and safely issue travel
-            tickets. The company's employees ensure equal access to transport
-            services for citizens entitled to social support measures.
-          </p>
-        </section>
-        <section className="px-4 text-gray-800 md:w-200 lg:w-220 mx-auto">
-          <p className=" pb-3 text-xl text-blue-700 font-medium">
-            Bus station information desk
-            <br />
-            <a
-              className=" text-base text-gray-800"
-              href="tel:+73412908888"
-              target="_blank"
-            >
-              +7 (3412) 90-88-88
-            </a>
-          </p>
-          <p className="pb-3 text-xl text-blue-700 font-medium">Head office</p>
-          <p>Izhevsk, Mayakovskogo Street, 47</p>
-        </section>
-        <aside className=" px-4 pt-6 md:w-200 lg:w-220 mx-auto">
-          <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700 ">
-            <img
-              className=" inline-block mr-1"
-              src="./public/jbility-toggle.svg"
-            />
-            Accessibility options
-          </button>
-          <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700">
-            <img
-              className=" w-5 inline-block mr-1"
-              src="./public/contacts.svg"
-            />
-            Client support centre
-          </button>
-          <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700">
-            <img className=" w-6 inline-block mr-1" src="./public/story.svg" />
-            Feedbacks
-          </button>
-          <h2 className=" pb-4 text-xl text-blue-700">News</h2>
-          <div className=" mb-4   shadow-lg text-gray-800">
-            <p className=" p-3 border-2 border-slate-100">Some news title</p>
-            <p className=" py-2 px-4 bg-gray-100 text-xs text-gray-500">
-              21.02.2024
-            </p>
+        <div className="md:w-200 lg:w-220 mx-auto lg:flex">
+          <div className=" lg:w-3/4">
+            <section className=" px-4 sm:px-1 ">
+              <h2 className=" mt-7 mb-6 sm:pl-3 text-2xl text-blue-900 font-medium">
+                Popular destinations
+              </h2>
+              <PopRouteItem />
+              <PopRouteItem />
+              <PopRouteItem />
+              <PopRouteItem />
+              <PopRouteItem />
+              <PopRouteItem />
+            </section>
+            <section className=" px-4 ">
+              <h2 className=" pt-5 pb-4 text-2xl text-blue-900 font-medium">
+                Bus Station
+              </h2>
+              <p className=" pb-3 text-gray-800">
+                We organize the sale of tickets for intercity, suburban and
+                interregional routes are more than 40 years old.
+              </p>
+              <p className=" pb-3 text-gray-800">In addition, we provide:</p>
+              <ol className=" px-4 text-gray-800 list-decimal">
+                <li>
+                  Advertising spaces (banners, banners, signs, information on
+                  tickets, distribution of leaflets/business cards, as well as
+                  advertising on our official website);
+                </li>
+                <li>
+                  Premises for rent at bus stations and bus stations (office
+                  premises, retail space, premises free use and land plots);
+                </li>
+                <li>Rent of buses for group charter transportation.</li>
+              </ol>
+              <p className=" pb-3 text-gray-800">
+                <br />
+                Every year, passengers turn to us to simply and safely issue
+                travel tickets. The company's employees ensure equal access to
+                transport services for citizens entitled to social support
+                measures.
+              </p>
+            </section>
+            <section className="px-4 text-gray-800 ">
+              <p className=" pb-3 text-xl text-blue-700 font-medium">
+                Bus station information desk
+                <br />
+                <a
+                  className=" text-base text-gray-800"
+                  href="tel:+73412908888"
+                  target="_blank"
+                >
+                  +7 (3412) 90-88-88
+                </a>
+              </p>
+              <p className="pb-3 text-xl text-blue-700 font-medium">
+                Head office
+              </p>
+              <p>Izhevsk, Mayakovskogo Street, 47</p>
+            </section>
           </div>
-          <div className=" mb-4   shadow-lg text-gray-800">
-            <p className=" p-3 border-2 border-slate-100">Some news title</p>
-            <p className=" py-2 px-4 bg-gray-100 text-xs text-gray-500">
-              21.02.2024
-            </p>
-          </div>
-          <div className=" mb-4   shadow-lg text-gray-800">
-            <p className=" p-3 border-2 border-slate-100">Some news title</p>
-            <p className=" py-2 px-4 bg-gray-100 text-xs text-gray-500">
-              21.02.2024
-            </p>
-          </div>
-          <div className=" text-blue-700 text-center">
-            <a>{"All news >>"}</a>
-          </div>
-          <div className=" mt-5">
-            <VKWidget />
-          </div>
-        </aside>
+          <aside className=" px-4 pt-6 lg:w-1/4">
+            <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700 ">
+              <img
+                className=" inline-block mr-1"
+                src="./public/jbility-toggle.svg"
+              />
+              Accessibility options
+            </button>
+            <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700">
+              <img
+                className=" w-5 inline-block mr-1"
+                src="./public/contacts.svg"
+              />
+              Client support centre
+            </button>
+            <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700">
+              <img
+                className=" w-6 inline-block mr-1"
+                src="./public/story.svg"
+              />
+              Feedbacks
+            </button>
+            <h2 className=" pb-4 text-xl text-blue-700">News</h2>
+            <div className=" mb-4   shadow-lg text-gray-800">
+              <p className=" p-3 border-2 border-slate-100">Some news title</p>
+              <p className=" py-2 px-4 bg-gray-100 text-xs text-gray-500">
+                21.02.2024
+              </p>
+            </div>
+            <div className=" mb-4   shadow-lg text-gray-800">
+              <p className=" p-3 border-2 border-slate-100">Some news title</p>
+              <p className=" py-2 px-4 bg-gray-100 text-xs text-gray-500">
+                21.02.2024
+              </p>
+            </div>
+            <div className=" mb-4   shadow-lg text-gray-800">
+              <p className=" p-3 border-2 border-slate-100">Some news title</p>
+              <p className=" py-2 px-4 bg-gray-100 text-xs text-gray-500">
+                21.02.2024
+              </p>
+            </div>
+            <div className=" text-blue-700 text-center">
+              <a>{"All news >>"}</a>
+            </div>
+            <div className=" mt-5">
+              <VKWidget />
+            </div>
+          </aside>
+        </div>
       </main>
       <footer>
         <div className=" mt-20">
