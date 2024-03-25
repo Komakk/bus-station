@@ -2,69 +2,17 @@ import VKWidget from "./VKWidget";
 import YandexMap from "./YandexMap";
 import Navigation from "./components/Navigation";
 import PopRouteItem from "./components/PopRouteItem";
+import SearchForm from "./components/SearchForm";
 
 export default function App() {
   return (
     <>
       <Navigation />
-      <main>
-        <section className="bg-search-form bg-center bg-cover text-white  md:pt-20 md:pb-7">
-          <div className="  py-5 bg-sky-800/30 md:bg-sky-800/70 md:w-5/6 md:mx-auto md:border-t-4 border-blue-400">
-            <div className=" px-5 flex items-center justify-between">
-              <h2 className=" pl-2 text-2xl font-medium drop-shadow-lg">
-                Buy ticket
-              </h2>
-              <div className=" hidden lg:block">
-                <a className=" bg-yellow-500 px-4 py-3 text-sm border cursor-pointer">
-                  Sign Up
-                </a>
-                <a className=" bg-blue-950 px-4 py-3 ml-6 text-sm border cursor-pointer">
-                  <i className=" pr-1 fa fa-sign-in"></i>
-                  Sign In
-                </a>
-              </div>
-            </div>
-            <form className=" lg:text-sm">
-              <div className=" relative mt-5 px-5 md:w-1/2 md:inline-block lg:w-[30%]">
-                <label className=" drop-shadow-md font-medium">From</label>
-                <input
-                  className="w-full text-gray-800 px-3 py-2"
-                  type="text"
-                  value={"Izhevsk"}
-                ></input>
-                <span className="fa fa-exchange absolute bottom-3 -right-[7px] cursor-pointer"></span>
-              </div>
-
-              <div className=" mt-2 px-5 md:w-1/2 md:inline-block lg:w-[30%]">
-                <label className=" drop-shadow-md font-medium">To</label>
-                <input
-                  className="w-full text-gray-800 px-3 py-2"
-                  type="text"
-                  value={"Mozhga"}
-                ></input>
-              </div>
-              <div className="mt-2 px-5 md:w-1/2 md:inline-block lg:w-[17%]">
-                <label className=" drop-shadow-md font-medium whitespace-nowrap">
-                  Departure date
-                </label>
-                <input
-                  className="w-full text-gray-800 px-3 py-2"
-                  value={"2024-02-18"}
-                  type="date"
-                ></input>
-              </div>
-              <div className="mt-5 px-5 md:w-1/2 md:inline-block lg:w-[23%]">
-                <button
-                  className=" px-3 py-2 w-full bg-yellow-500"
-                  type="submit"
-                >
-                  Search
-                </button>
-              </div>
-            </form>
-          </div>
+      <main className=" relative top-14">
+        <section className="  bg-search-form bg-center bg-cover text-white  md:pt-20 md:pb-7 lg:pt-28 lg:pb-16">
+          <SearchForm />
         </section>
-        <div className="md:w-200 lg:w-220 mx-auto lg:flex">
+        <div className="md:w-200 lg:w-220 xl:w-[1170px] mx-auto lg:flex">
           <div className=" lg:w-3/4">
             <section className=" px-4 sm:px-1 ">
               <h2 className=" mt-7 mb-6 sm:pl-3 text-2xl text-blue-900 font-medium">
@@ -115,7 +63,7 @@ export default function App() {
                   href="tel:+73412908888"
                   target="_blank"
                 >
-                  +7 (3412) 90-88-88
+                  +7 (888) 88-88-88
                 </a>
               </p>
               <p className="pb-3 text-xl text-blue-700 font-medium">
@@ -179,37 +127,42 @@ export default function App() {
           <YandexMap />
         </div>
         <div className="  bg-gray-100 ">
-          <div className="pt-7 px-5 pb-4 md:w-200 lg:w-220 mx-auto">
-            <div className=" pb-5">
-              <p className=" text-gray-500">Technical support</p>
-              <a className=" text-2xl text-blue-700" href="tel:8 800 600-03-38">
-                8 800 600-03-38
-              </a>
-            </div>
-            <hr className=" mt-5 mb-5" />
-            <div>
-              <a className=" mr-8 mb-4 inline-block cursor-pointer hover:underline">
-                Requisites
-              </a>
-              <a className=" mr-8 mb-4 inline-block cursor-pointer hover:underline">
-                Terms of use
-              </a>
-              <a className="mb-4 inline-block cursor-pointer hover:underline">
-                Privacy Policy
-              </a>
-              <div className=" mt-3 flex">
-                <a className="cursor-pointer">
-                  <img
-                    className=" h-11 mr-5 mb-6"
-                    src="./public/app-store.webp"
-                  />
+          <div className="pt-7 px-5 pb-4 md:w-200 lg:w-220 xl:w-[1170px] mx-auto">
+            <div className="lg:flex lg:justify-between lg:flex-row-reverse">
+              <div className=" pb-5">
+                <p className=" text-gray-500">Technical support</p>
+                <a
+                  className=" text-2xl text-blue-700"
+                  href="tel:8 800 600-03-38"
+                >
+                  8 888 888-88-88
                 </a>
-                <a className="cursor-pointer">
-                  <img
-                    className=" h-11 mr-5 mb-6"
-                    src="./public/google-play.webp"
-                  />
+              </div>
+              <hr className=" mt-5 mb-5 lg:hidden" />
+              <div>
+                <a className=" mr-8 mb-4 inline-block cursor-pointer hover:underline">
+                  Requisites
                 </a>
+                <a className=" mr-8 mb-4 inline-block cursor-pointer hover:underline">
+                  Terms of use
+                </a>
+                <a className="mb-4 inline-block cursor-pointer hover:underline">
+                  Privacy Policy
+                </a>
+                <div className=" mt-3 flex">
+                  <a className="cursor-pointer">
+                    <img
+                      className=" h-11 mr-5 mb-6"
+                      src="./public/app-store.webp"
+                    />
+                  </a>
+                  <a className="cursor-pointer">
+                    <img
+                      className=" h-11 mr-5 mb-6"
+                      src="./public/google-play.webp"
+                    />
+                  </a>
+                </div>
               </div>
             </div>
             <div>

@@ -76,38 +76,39 @@ export default function Navigation() {
 
   return (
     <>
-      <header className="mx-auto flex relative items-center justify-center lg:justify-between h-14 md:w-200 lg:w-220">
-        <button
-          className=" absolute left-5 text-gray-500 lg:hidden"
-          onClick={() => setIsSidebarOpen(true)}
-        >
-          <svg className=" h-10 w-10 fill-current" viewBox="0 0 24 24">
-            <path
-              fillRule="evenodd"
-              d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
-            />
-          </svg>
-        </button>
-
-        <a
-          className=" px-2 text-2xl uppercase text-blue-700 font-light cursor-pointer hover:text-gray-600 "
-          href="#"
-        >
-          <img className=" mr-2 w-10 inline-block " src="./public/logo.png" />
-          <span className=" align-middle">Bus Station</span>
-        </a>
-        <nav className=" px-2 hidden lg:block">
-          <ul>
-            {navList.map((item) => (
-              <NavListItem
-                key={item.title}
-                title={item.title}
-                src={item.src}
-                innerList={item.innerList}
+      <header className=" fixed z-10 bg-white w-full">
+        <div className="mx-auto flex relative items-center justify-center lg:justify-between h-14 md:w-200 lg:w-220 xl:w-[1170px]">
+          <button
+            className=" absolute left-5 text-gray-500 lg:hidden"
+            onClick={() => setIsSidebarOpen(true)}
+          >
+            <svg className=" h-10 w-10 fill-current" viewBox="0 0 24 24">
+              <path
+                fillRule="evenodd"
+                d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
               />
-            ))}
-          </ul>
-        </nav>
+            </svg>
+          </button>
+          <a
+            className=" px-2 text-2xl uppercase text-blue-700 font-light cursor-pointer hover:text-gray-600 "
+            href="#"
+          >
+            <img className=" mr-2 w-10 inline-block " src="./public/logo.png" />
+            <span className=" align-middle">Bus Station</span>
+          </a>
+          <nav className=" px-2 hidden lg:block">
+            <ul>
+              {navList.map((item) => (
+                <NavListItem
+                  key={item.title}
+                  title={item.title}
+                  src={item.src}
+                  innerList={item.innerList}
+                />
+              ))}
+            </ul>
+          </nav>
+        </div>
       </header>
       <div
         className={`fixed overflow-auto w-4/5 h-full top-0 bg-white z-40 ${
@@ -135,28 +136,6 @@ export default function Navigation() {
                 innerList={item.innerList}
               />
             ))}
-            {/* <ListItem
-              title="Services"
-              src="/#"
-              innerList={["Advertisement", "Rent", "Cooperation"]}
-            />
-            <ListItem
-              title="About"
-              src="/#"
-              innerList={["Management and stations", "Vacancies", "News"]}
-            />
-            <ListItem
-              title="Passenger Service"
-              src="/#"
-              innerList={[
-                "Boarding and ticket return",
-                "Ticket reservation",
-                "Trip rules",
-                "Passenger insurance",
-              ]}
-            />
-            <ListItem title="Contacts" src="/#" />
-            <ListItem title="Schedule" src="/#" /> */}
           </ul>
         </nav>
         <div className=" fixed w-4/5 bottom-0 p-2">
