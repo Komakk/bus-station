@@ -1,10 +1,11 @@
 import { useState } from "react";
 import DatePicker from "./DatePicker";
+import SearchInput from "./SearchInput";
 
 export default function SearchForm() {
-  const [fromInputValue, setFromInputValue] = useState("Izhevsk");
-  const [isSearchSuggestionsVisible, setIsSearchSuggestionsVisible] =
-    useState(false);
+  const [fromInputValue, setfromInputValue] = useState("");
+  const [toInputValue, settoInputValue] = useState("");
+
   return (
     <div className="  py-5 bg-sky-800/30 md:bg-sky-800/70 md:w-5/6 md:mx-auto md:border-t-4 border-blue-400">
       <div className=" px-5 flex items-center justify-between">
@@ -24,55 +25,21 @@ export default function SearchForm() {
       <form className=" lg:text-sm">
         <div className=" relative mt-5 px-5 md:w-1/2 md:inline-block lg:w-[30%]">
           <label className=" drop-shadow-md font-medium">From</label>
-          <input
-            className="w-full text-gray-800 px-3 py-2"
-            type="text"
-            value={fromInputValue}
-            onChange={(e) => setFromInputValue(e.target.value)}
-            onClick={() => setIsSearchSuggestionsVisible(true)}
-            onBlur={() =>
-              setTimeout(() => {
-                setIsSearchSuggestionsVisible(false);
-              }, 250)
-            }
-          ></input>
-          <span className="fa fa-exchange absolute bottom-3 -right-[7px] cursor-pointer"></span>
-          <ul
-            className={` z-10 mt-1 absolute w-96 bg-white text-gray-900 text-base border border-b-0 border-gray-300 ${
-              isSearchSuggestionsVisible ? "" : "hidden"
-            }`}
-          >
-            <li className=" px-3 py-1 text-xs text-gray-400">
-              Popular destinations
-            </li>
-            {[
-              "Izhevsk",
-              "Votkinsk",
-              "Sarapul",
-              "Glazov",
-              "Mozhga",
-              "Kambarka",
-            ].map((item) => (
-              <li
-                className=" px-3 py-1 cursor-pointer border-b border-gray-300 hover:bg-gray-200"
-                key={item}
-                onClick={() => {
-                  setFromInputValue(item);
-                }}
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
+          <SearchInput
+            formValue={fromInputValue}
+            setFormValue={setfromInputValue}
+            departure={""}
+          />
+          <span className=" hidden md:inline-block fa fa-exchange absolute bottom-3 -right-[7px] cursor-pointer"></span>
         </div>
 
         <div className=" mt-2 px-5 md:w-1/2 md:inline-block lg:w-[30%]">
           <label className=" drop-shadow-md font-medium">To</label>
-          <input
-            className="w-full text-gray-800 px-3 py-2"
-            type="text"
-            value={"Mozhga"}
-          ></input>
+          <SearchInput
+            formValue={toInputValue}
+            setFormValue={settoInputValue}
+            departure={fromInputValue}
+          />
         </div>
         <div className="mt-2 px-5 md:w-1/2 md:inline-block lg:w-[17%]">
           <label className=" drop-shadow-md font-medium whitespace-nowrap">
