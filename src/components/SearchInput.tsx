@@ -62,7 +62,7 @@ export default function SearchInput({
         <span className="fa fa-times"></span>
       </div>
       <input
-        className="w-full text-gray-800 px-3 py-2 outline-none"
+        className="w-full text-gray-800 px-3 py-2 outline-none focus:ring-1 ring-gray-300 "
         type="text"
         placeholder="Select or type city"
         value={inputValue}
@@ -84,7 +84,7 @@ export default function SearchInput({
       ></input>
 
       <ul
-        className={` z-10 mt-1 absolute w-80 bg-white text-gray-900 text-base border border-b-0 border-gray-300 ${
+        className={` z-10 left-0 mt-1 absolute w-full md:w-80 md:left-auto left bg-white text-gray-900 text-base md:border md:border-b-0 border-gray-300 ${
           isSearchSuggestionsVisible ? "" : "hidden"
         }`}
       >
@@ -96,14 +96,14 @@ export default function SearchInput({
         {suggestionList.map((item) => {
           if (item === "Not found") {
             return (
-              <li key={item} className=" px-3 py-1 border-b border-gray-300">
+              <li key={item} className=" px-6 py-2 border-b border-gray-300">
                 {item}
               </li>
             );
           } else {
             return (
               <li
-                className=" px-3 py-1 cursor-pointer border-b border-gray-300 hover:bg-gray-200"
+                className=" px-6 py-2 cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                 key={item}
                 onClick={() => {
                   setFormValue(item);

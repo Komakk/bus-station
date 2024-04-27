@@ -7,7 +7,7 @@ export default function SearchForm() {
   const [toInputValue, settoInputValue] = useState("");
 
   return (
-    <div className="  py-5 bg-sky-800/30 md:bg-sky-800/70 md:w-5/6 md:mx-auto md:border-t-4 border-blue-400">
+    <div className="  py-5 bg-sky-800/30 md:bg-sky-800/70 md:w-5/6 md:mx-auto">
       <div className=" px-5 flex items-center justify-between">
         <h2 className=" pl-2 text-2xl font-medium drop-shadow-lg">
           Buy ticket
