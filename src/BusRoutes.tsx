@@ -1,5 +1,6 @@
 import Navigation from "./components/Navigation";
 import SearchForm from "./components/SearchForm";
+import Ticket from "./components/Ticket";
 
 export default function BusRoutes() {
   return (
@@ -28,9 +29,9 @@ export default function BusRoutes() {
           <span className="fa fa-arrow-down text-gray-500"></span>
         </section>
         <div className=" px-4">
-          <div className=" mb-5 bg-gray-200 h-28">
-            <p>Izhevsk - Votkinsk</p>
-          </div>
+          <Ticket />
+          <Ticket />
+          <Ticket />
         </div>
       </main>
     </>
