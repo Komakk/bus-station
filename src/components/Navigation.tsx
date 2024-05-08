@@ -1,6 +1,6 @@
 import { useState } from "react";
 import NavListItem from "./NavListItem";
-import SidebarListItem from "./SidebarListItem";
+import SidebarListItem from "./SidebarNavListItem";
 
 const navList = [
   {
