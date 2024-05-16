@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./DatePicker.css";
+import "./DateInput.css";
 
 export default function DatePicker() {
   const [date, setDate] = useState(new Date());

@@ -1,3 +1,4 @@
+import DayPicker from "./components/DayPicker";
 import Footer from "./components/Footer";
 import Navigation from "./components/Navigation";
 import SearchForm from "./components/SearchForm";
@@ -5,6 +6,7 @@ import SideBar from "./components/SideBar";
 import Ticket from "./components/Ticket";
 
 export default function BusRoutes() {
+  const date = new Date();
   return (
     <>
       <Navigation />
@@ -16,15 +18,15 @@ export default function BusRoutes() {
         <div className="md:w-200 lg:w-220 xl:w-[1170px] mx-auto lg:flex">
           <div className=" px-4 lg:w-3/4">
             <section className=" py-4 flex justify-between">
-              <button className=" px-3 py-1 border border-sky-700 text-sky-700">
-                99 Mounth
-              </button>
-              <button className=" px-3 py-1 border border-sky-700 text-sky-700">
-                99 Mounth
-              </button>
-              <button className=" px-3 py-1 border border-sky-700 text-sky-700">
-                99 Mounth
-              </button>
+              <DayPicker
+                date={new Date(date.getTime() - 24 * 60 * 60 * 1000)}
+              />
+              <span className=" px-3 py-1 text-xl text-sky-700">
+                {date.toDateString()}
+              </span>
+              <DayPicker
+                date={new Date(date.getTime() + 24 * 60 * 60 * 1000)}
+              />
             </section>
             <section className=" mb-2 flex justify-center items-center">
               <span>Sort by:&nbsp;</span>
