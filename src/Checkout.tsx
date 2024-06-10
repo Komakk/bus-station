@@ -1,22 +1,82 @@
 import { useState } from "react";
 import Navigation from "./components/Navigation";
 import PassengerForm from "./components/PassengerForm";
+import { nanoid } from "nanoid";
 
-const PASSENGER = {
-  firstName: "",
-  lastName: "",
-  type: "adult",
-  seat: "any",
-  luggage: false,
-  ensurance: false,
-};
+interface Passenger {
+  id: string;
+  firstname: string;
+  lastname: string;
+  type: string;
+  seat: string;
+  luggage: boolean;
+  ensurance: boolean;
+}
+
+const ROUTE_PRICE = 300;
+
 export default function Checkout() {
   const [isTripDetailsHidden, setIsTripDetailsHidden] = useState(true);
-  const [passengers, setPassengers] = useState([{ ...PASSENGER }]);
+  const [passengers, setPassengers] = useState<Passenger[]>([
+    {
+      id: "p0",
+      firstname: "",
+      lastname: "",
+      type: "Adult",
+      seat: "any",
+      luggage: false,
+      ensurance: false,
+    },
+  ]);
 
   function addPassenger() {
-    setPassengers([...passengers, { ...PASSENGER }]);
+    setPassengers([
+      ...passengers,
+      {
+        id: nanoid(),
+        firstname: "",
+        lastname: "",
+        type: "Adult",
+        seat: "any",
+        luggage: false,
+        ensurance: false,
+      },
+    ]);
   }
+
+  function editPassenger(id: string, name: string, value: string | boolean) {
+    const editedPassengers = passengers.map((passenger) => {
+      if (id === passenger.id) {
+        const editedPassenger = { ...passenger };
+        if (typeof value === "string") {
+          editedPassenger[name as "firstname" | "lastname" | "type" | "seat"] =
+            value;
+        } else {
+          editedPassenger[name as "luggage" | "ensurance"] = value;
+        }
+        return editedPassenger;
+      }
+      return passenger;
+    });
+    setPassengers(editedPassengers);
+  }
+
+  const passengerTypes = passengers.reduce(
+    (prev, curr) => {
+      curr.type === "Adult" ? (prev.adult += 1) : (prev.child += 1);
+      return prev;
+    },
+    { adult: 0, child: 0 }
+  );
+
+  const booking = {
+    adult: passengerTypes.adult * ROUTE_PRICE,
+    child: (passengerTypes.child * ROUTE_PRICE) / 2,
+    luggage:
+      passengers.filter((item) => item.luggage).length * ROUTE_PRICE * 0.18,
+    ensurance: passengers.filter((item) => item.ensurance).length * 25,
+  };
+
   return (
     <>
       <Navigation />
@@ -71,7 +131,13 @@ export default function Checkout() {
         </section>
         <h1 className=" p-3 text-2xl font-medium text-blue-800">Passengers</h1>
         {passengers.map((passenger, i) => (
-          <PassengerForm key={i} id={i + 1} passenger={passenger} />
+          <PassengerForm
+            key={passenger.id}
+            index={i + 1}
+            passenger={passenger}
+            editPassenger={editPassenger}
+            routePrice={ROUTE_PRICE}
+          />
         ))}
 
         <div className=" py-5 text-center">
@@ -107,16 +173,46 @@ export default function Checkout() {
             </span>
             <div className="border-t"></div>
             <p className=" pt-3 pb-1">Passengers:</p>
-            <p className=" pb-3">
-              1 Adult<span className=" float-right">348rub</span>
+            <p>
+              {passengerTypes.adult > 1
+                ? `${passengerTypes.adult} Adults`
+                : `${passengerTypes.adult} Adult`}
+              <span className=" float-right">{booking.adult}rub</span>
             </p>
-            <div className=" border-t"></div>
+            {passengerTypes.child > 0 && (
+              <p>
+                {passengerTypes.child > 1
+                  ? `${passengerTypes.child} Children`
+                  : `${passengerTypes.child} Child`}
+                <span className=" float-right">{booking.child}rub</span>
+              </p>
+            )}
+            {booking.luggage > 0 && (
+              <div className="mt-3 border-t">
+                <p className=" py-3">
+                  {booking.luggage / (ROUTE_PRICE * 0.18)} Additional luggage
+                  <span className=" float-right">{booking.luggage}rub</span>
+                </p>
+              </div>
+            )}
+            {booking.ensurance > 0 && (
+              <div className="border-t">
+                <p className=" py-3">
+                  {booking.ensurance / 25} Ensurance
+                  <span className=" float-right">{booking.ensurance}rub</span>
+                </p>
+              </div>
+            )}
+            <div className="border-t"></div>
             <p className=" py-3">
               Service Fee<span className=" float-right">0rub</span>
             </p>
             <div className=" border-t"></div>
             <p className="py-3 text-2xl font-medium">
-              Total<span className=" float-right">348rub</span>
+              Total
+              <span className=" float-right">
+                {Object.values(booking).reduce((prev, cur) => prev + cur)}rub
+              </span>
             </p>
           </div>
         </div>
