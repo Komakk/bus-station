@@ -1,11 +1,14 @@
 import { useState } from "react";
 import DatePicker from "./DateInput";
 import SearchInput from "./SearchInput";
+import { Link } from "react-router-dom";
 
 export default function SearchForm() {
   const [isMini, setIsMini] = useState(true);
   const [fromInputValue, setfromInputValue] = useState("");
   const [toInputValue, settoInputValue] = useState("");
+
+  const link = `${fromInputValue}/${toInputValue}`.toLowerCase();
 
   return (
     <div className="  py-5  bg-sky-800/30 md:bg-sky-800/70 md:w-5/6 md:mx-auto">
@@ -64,9 +67,12 @@ export default function SearchForm() {
           <DatePicker />
         </div>
         <div className="mt-5 px-5 md:w-1/2 md:inline-block lg:w-[23%]">
-          <button className=" px-3 py-2 w-full bg-yellow-500" type="submit">
+          <Link
+            to={link}
+            className=" inline-block px-3 py-2 w-full bg-yellow-500"
+          >
             Search
-          </button>
+          </Link>
         </div>
       </form>
     </div>

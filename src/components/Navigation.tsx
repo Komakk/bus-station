@@ -93,7 +93,7 @@ export default function Navigation() {
             className=" px-2 text-2xl uppercase text-blue-700 font-light cursor-pointer hover:text-gray-600 "
             href="#"
           >
-            <img className=" mr-2 w-10 inline-block " src="./public/logo.png" />
+            <img className=" mr-2 w-10 inline-block " src="/logo.png" />
             <span className=" align-middle">Bus Station</span>
           </a>
           <nav className=" px-2 hidden lg:block">

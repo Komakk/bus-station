@@ -1,12 +1,26 @@
+import { useEffect, useState } from "react";
 import DayPicker from "./components/DayPicker";
 import Footer from "./components/Footer";
 import Navigation from "./components/Navigation";
 import SearchForm from "./components/SearchForm";
 import SideBar from "./components/SideBar";
 import Ticket from "./components/Ticket";
+import { useParams } from "react-router-dom";
 
-export default function BusRoutes() {
+export default function BusTripsPage() {
+  const [trips, setTrips] = useState([]);
+  const { from, to } = useParams();
+
+  console.log(trips);
+
   const date = new Date();
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/trips/${from}/${to}`)
+      .then((response) => response.json())
+      .then((data) => setTrips(data));
+  }, [from, to]);
+
   return (
     <>
       <Navigation />
@@ -35,11 +49,12 @@ export default function BusRoutes() {
               <button className=" text-gray-500">time&nbsp;</button>
               <span className="fa fa-arrow-down text-gray-500"></span>
             </section>
-            <Ticket />
-            <Ticket />
-            <Ticket />
-            <Ticket />
-            <Ticket />
+            {trips.length ? (
+              trips.map((trip) => <Ticket trip={trip} />)
+            ) : (
+              <p className=" text-center text-lg">{`Trips ${from} - ${to} not found`}</p>
+            )}
+            {}
           </div>
           <SideBar />
         </div>

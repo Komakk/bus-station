@@ -13,7 +13,7 @@ export default function VKWidget() {
       <div className=" h-36 px-4">
         <div className=" h-16 border-b">
           <a className=" flex items-center justify-start" href="#">
-            <img className=" rounded-full" src="./public/station.jpg" />
+            <img className=" rounded-full" src="/station.jpg" />
             <span className=" pl-3 font-semibold">Автовокзалы Удмуртии</span>
           </a>
         </div>

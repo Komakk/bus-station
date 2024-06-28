@@ -28,16 +28,10 @@ export default function Footer() {
               </a>
               <div className=" mt-3 flex">
                 <a className="cursor-pointer">
-                  <img
-                    className=" h-11 mr-5 mb-6"
-                    src="./public/app-store.webp"
-                  />
+                  <img className=" h-11 mr-5 mb-6" src="/app-store.webp" />
                 </a>
                 <a className="cursor-pointer">
-                  <img
-                    className=" h-11 mr-5 mb-6"
-                    src="./public/google-play.webp"
-                  />
+                  <img className=" h-11 mr-5 mb-6" src="/google-play.webp" />
                 </a>
               </div>
             </div>

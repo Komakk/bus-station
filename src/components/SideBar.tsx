@@ -4,15 +4,15 @@ export default function SideBar() {
   return (
     <aside className=" px-4 pt-6 lg:w-1/4">
       <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700 ">
-        <img className=" inline-block mr-1" src="./public/jbility-toggle.svg" />
+        <img className=" inline-block mr-1" src="/jbility-toggle.svg" />
         Accessibility options
       </button>
       <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700">
-        <img className=" w-5 inline-block mr-1" src="./public/contacts.svg" />
+        <img className=" w-5 inline-block mr-1" src="/contacts.svg" />
         Client support centre
       </button>
       <button className=" py-3 mb-5 w-full block border border-blue-800 text-blue-700">
-        <img className=" w-6 inline-block mr-1" src="./public/story.svg" />
+        <img className=" w-6 inline-block mr-1" src="/story.svg" />
         Feedbacks
       </button>
       <h2 className=" pb-4 text-xl text-blue-700">News</h2>

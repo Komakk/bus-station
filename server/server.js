@@ -1,52 +1,11 @@
 import express from "express";
 import cors from "cors";
+import { popDestinations, destinations, trips } from "./constants.js";
 
 const app = express();
 app.use(cors());
 
-const popDestinations = [
-  {
-    from: "Izhevsk",
-    to: ["Votkinsk", "Sarapul", "Glazov", "Mozhga", "Kambarka"],
-  },
-  {
-    from: "Votkinsk",
-    to: ["Izhevsk", "Sharkan", "Chaikovskiy", "Perm", "Glazov"],
-  },
-  {
-    from: "Sarapul",
-    to: ["Izhevsk", "Karakulino", "Votkinsk", "Perm", "Glazov"],
-  },
-  {
-    from: "Glazov",
-    to: ["Izhevsk", "Balezino", "Yukamenskoe", "Yar", "Igra"],
-  },
-  {
-    from: "Mozhga",
-    to: ["Izhevsk", "Alnashi", "Nab. Chelny", "Vavozh", "Uva"],
-  },
-  {
-    from: "Kambarka",
-    to: ["Izhevsk", "Neftekamsk", "Chaikovskiy", "Sarapul", "Yanaul"],
-  },
-];
-
 const popFromDestinations = popDestinations.map((item) => item.from);
-
-const destinations = [
-  "Izhevsk",
-  "Votkinsk",
-  "Glazov",
-  "Mozhga",
-  "Kambarka",
-  "Sharkan",
-  "Karakulino",
-  "Balezino",
-  "Igra",
-  "Alnashi",
-  "Vavozh",
-  "Uva",
-];
 
 app.get("/getPopRoutes/:departure", (req, res) => {
   const departure = req.params.departure;
@@ -64,6 +23,17 @@ app.get("/search/:value", (req, res) => {
   const value = req.params.value;
   const searchList = destinations.filter((item) => item.includes(value));
   res.json(searchList);
+});
+
+app.get("/trips/:from/:to", (req, res) => {
+  const from = req.params.from;
+  const to = req.params.to;
+  const tripList = trips.filter(
+    (item) =>
+      item.from.city.toLowerCase() === from &&
+      item.to.city.toLocaleLowerCase() === to
+  );
+  res.json(tripList);
 });
 
 app.listen(8000, () => {
