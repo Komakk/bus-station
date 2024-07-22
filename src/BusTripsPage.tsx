@@ -6,42 +6,53 @@ import SearchForm from "./components/SearchForm";
 import SideBar from "./components/SideBar";
 import Ticket from "./components/Ticket";
 import { useParams } from "react-router-dom";
+import { capitalizeFirstLetter } from "../utils/utils";
 
 export default function BusTripsPage() {
   const [trips, setTrips] = useState([]);
-  const { from, to } = useParams();
+  const { from, to, date } = useParams();
 
-  console.log(trips);
-
-  const date = new Date();
+  const currentDate = date && new Date(`${date}T00:00:00`);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/trips/${from}/${to}`)
+    let ignore = false;
+
+    fetch(`http://localhost:8000/trips/${from}/${to}/${date}`)
       .then((response) => response.json())
-      .then((data) => setTrips(data));
-  }, [from, to]);
+      .then((data) => {
+        if (!ignore) {
+          setTrips(data);
+        }
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, [from, to, date]);
 
   return (
     <>
       <Navigation />
       <main className=" relative top-14">
         <div className=" bg-sky-800 text-white ">
-          <SearchForm />
+          <SearchForm initialIsMini={true} />
         </div>
 
         <div className="md:w-200 lg:w-220 xl:w-[1170px] mx-auto lg:flex">
           <div className=" px-4 lg:w-3/4">
-            <section className=" py-4 flex justify-between">
-              <DayPicker
-                date={new Date(date.getTime() - 24 * 60 * 60 * 1000)}
-              />
-              <span className=" px-3 py-1 text-xl text-sky-700">
-                {date.toDateString()}
-              </span>
-              <DayPicker
-                date={new Date(date.getTime() + 24 * 60 * 60 * 1000)}
-              />
-            </section>
+            {currentDate && (
+              <section className=" py-4 flex justify-between">
+                <DayPicker
+                  dpDate={new Date(currentDate.getTime() - 24 * 60 * 60 * 1000)}
+                />
+                <span className=" px-3 py-1 text-xl text-sky-700">
+                  {currentDate.toDateString()}
+                </span>
+                <DayPicker
+                  dpDate={new Date(currentDate.getTime() + 24 * 60 * 60 * 1000)}
+                />
+              </section>
+            )}
             <section className=" mb-2 flex justify-center items-center">
               <span>Sort by:&nbsp;</span>
               <button className=" text-sky-700">price</button>
@@ -50,9 +61,11 @@ export default function BusTripsPage() {
               <span className="fa fa-arrow-down text-gray-500"></span>
             </section>
             {trips.length ? (
-              trips.map((trip) => <Ticket trip={trip} />)
+              trips.map((trip, i) => <Ticket key={i} trip={trip} />)
             ) : (
-              <p className=" text-center text-lg">{`Trips ${from} - ${to} not found`}</p>
+              <p className=" text-center text-lg">{`Trips ${capitalizeFirstLetter(
+                from
+              )} - ${capitalizeFirstLetter(to)} not found`}</p>
             )}
             {}
           </div>

@@ -1,16 +1,22 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import MainPage from "./MainPage";
-import BusRoutes from "./BusTripsPage";
 import Checkout from "./Checkout";
+import BusTripsPage from "./BusTripsPage";
+import { useLayoutEffect } from "react";
 
 export default function App() {
+  const location = useLocation();
+
+  // scroll to top of page after a page transition.
+  useLayoutEffect(() => {
+    document.documentElement.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [location.pathname]);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/:from/:to" element={<BusRoutes />} />
-        <Route path="/checkout" element={<Checkout />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      <Route path="/:from/:to/:date" element={<BusTripsPage />} />
+      <Route path="/checkout" element={<Checkout />} />
+    </Routes>
   );
 }

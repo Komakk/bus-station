@@ -1,6 +1,7 @@
 import { useState } from "react";
 import NavListItem from "./NavListItem";
 import SidebarListItem from "./SidebarNavListItem";
+import { Link } from "react-router-dom";
 
 const navList = [
   {
@@ -89,13 +90,13 @@ export default function Navigation() {
               />
             </svg>
           </button>
-          <a
+          <Link
             className=" px-2 text-2xl uppercase text-blue-700 font-light cursor-pointer hover:text-gray-600 "
-            href="#"
+            to={"/"}
           >
             <img className=" mr-2 w-10 inline-block " src="/logo.png" />
             <span className=" align-middle">Bus Station</span>
-          </a>
+          </Link>
           <nav className=" px-2 hidden lg:block">
             <ul>
               {navList.map((item) => (

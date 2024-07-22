@@ -11,7 +11,7 @@ export default function MainPage() {
       <main className=" relative top-14">
         <section className="  bg-search-form bg-center bg-cover text-white  md:pt-20 md:pb-7 lg:pt-28 lg:pb-16">
           <div className="w-5/6 mx-auto md:border-t-4 border-blue-400"></div>
-          <SearchForm />
+          <SearchForm initialIsMini={false} />
         </section>
         <div className="md:w-200 lg:w-220 xl:w-[1170px] mx-auto lg:flex">
           <div className=" lg:w-3/4">

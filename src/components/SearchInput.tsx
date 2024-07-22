@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useDebounce from "../custom-hooks/useDebounce";
 
 interface SearchInputProps {
@@ -12,11 +12,12 @@ export default function SearchInput({
   setFormValue,
   departure,
 }: SearchInputProps) {
-  const [inputValue, setInputValue] = useState("");
   const [isSearchSuggestionsVisible, setIsSearchSuggestionsVisible] =
     useState(false);
   const [popRoutes, setPopRoutes] = useState<Array<string>>([]);
   const [searchList, setSearchList] = useState<Array<string>>([]);
+  const ref = useRef<HTMLInputElement>(null);
+  const prevValue = useRef(formValue);
   const loadDataDebounced = useDebounce(loadData, 400);
 
   const suggestionList = searchList.length ? searchList : popRoutes;
@@ -62,24 +63,25 @@ export default function SearchInput({
         <span className="fa fa-times"></span>
       </div>
       <input
+        ref={ref}
         className="w-full text-gray-800 px-3 py-2 outline-none focus:ring-1 ring-gray-300 "
         type="text"
         placeholder="Select or type city"
-        value={inputValue}
+        value={formValue}
         onChange={(e) => {
           loadDataDebounced(e.target.value);
-          setInputValue(e.target.value);
+          setFormValue(e.target.value);
         }}
         onClick={() => {
           setIsSearchSuggestionsVisible(true);
-          setInputValue("");
+          setFormValue("");    
           setSearchList([]);
         }}
         onBlur={() => {
           setTimeout(() => {
             setIsSearchSuggestionsVisible(false);
+             setFormValue(prevValue.current);
           }, 250);
-          setInputValue(formValue);
         }}
       ></input>
 
@@ -106,8 +108,8 @@ export default function SearchInput({
                 className=" px-6 py-2 cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                 key={item}
                 onClick={() => {
+                  prevValue.current = item;                  
                   setFormValue(item);
-                  setInputValue(item);
                 }}
               >
                 {item}

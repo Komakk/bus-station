@@ -1,14 +1,24 @@
 import { useState } from "react";
 import DatePicker from "./DateInput";
 import SearchInput from "./SearchInput";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { capitalizeFirstLetter, getDate } from "../../utils/utils";
 
-export default function SearchForm() {
-  const [isMini, setIsMini] = useState(true);
-  const [fromInputValue, setfromInputValue] = useState("");
-  const [toInputValue, settoInputValue] = useState("");
+export default function SearchForm({
+  initialIsMini,
+}: {
+  initialIsMini: boolean;
+}) {
+  const { from = "Izhevsk", to = "Votkinsk" } = useParams();
 
-  const link = `${fromInputValue}/${toInputValue}`.toLowerCase();
+  const [isMini, setIsMini] = useState(initialIsMini);
+  const [fromInputValue, setfromInputValue] = useState(
+    capitalizeFirstLetter(from)
+  );
+  const [toInputValue, settoInputValue] = useState(capitalizeFirstLetter(to));
+  const [date, setDate] = useState(getDate(new Date()));
+
+  const link = `/${fromInputValue}/${toInputValue}/${date}`.toLowerCase();
 
   return (
     <div className="  py-5  bg-sky-800/30 md:bg-sky-800/70 md:w-5/6 md:mx-auto">
@@ -19,8 +29,11 @@ export default function SearchForm() {
       >
         <input
           className="px-3 py-2 w-full text-gray-800"
-          value={"ExampleCity1 - Examplecity2"}
+          value={`${capitalizeFirstLetter(from)} - ${capitalizeFirstLetter(
+            to
+          )}`}
           onClick={() => setIsMini(!isMini)}
+          readOnly
         />
       </div>
       <div
@@ -64,7 +77,7 @@ export default function SearchForm() {
           <label className=" drop-shadow-md font-medium whitespace-nowrap">
             Departure date
           </label>
-          <DatePicker />
+          <DatePicker dateValue={date} setDateValue={setDate} />
         </div>
         <div className="mt-5 px-5 md:w-1/2 md:inline-block lg:w-[23%]">
           <Link

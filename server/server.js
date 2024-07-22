@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { popDestinations, destinations, trips } from "./constants.js";
+import { getDate } from "../utils/utils.js";
 
 const app = express();
 app.use(cors());
@@ -25,15 +26,27 @@ app.get("/search/:value", (req, res) => {
   res.json(searchList);
 });
 
-app.get("/trips/:from/:to", (req, res) => {
+app.get("/trips/:from/:to/:date", (req, res) => {
   const from = req.params.from;
   const to = req.params.to;
+  const date = req.params.date;
   const tripList = trips.filter(
     (item) =>
       item.from.city.toLowerCase() === from &&
-      item.to.city.toLocaleLowerCase() === to
+      item.to.city.toLocaleLowerCase() === to &&
+      item.from.date.split("T")[0] === date
   );
-  res.json(tripList);
+
+  const now = new Date();
+  const nowDate = getDate(now);
+  if (date === nowDate) {
+    const todayTripList = tripList.filter(
+      (item) => Date.parse(item.from.date) > now.getTime()
+    );
+    res.json(todayTripList);
+  } else {
+    res.json(tripList);
+  }
 });
 
 app.listen(8000, () => {
