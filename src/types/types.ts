@@ -9,4 +9,14 @@ interface Trip {
     status: string;
 }
 
-export type { Trip };
+interface Passenger {
+    id: string;
+    firstname: string;
+    lastname: string;
+    type: string;
+    seat: string;
+    luggage: boolean;
+    ensurance: boolean;
+  }
+
+export type { Trip, Passenger };

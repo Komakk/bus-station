@@ -1,10 +1,31 @@
 import express from "express";
 import cors from "cors";
 import { popDestinations, destinations, trips } from "./constants.js";
-import { getDate } from "../utils/utils.js";
+import { getDate, getTime } from "../utils/utils.js";
 
 const app = express();
 app.use(cors());
+
+function updateDates(trips) {
+  const now = new Date();
+  return trips.map((trip) => {
+    const tripFromDate = new Date(trip.from.date);
+    const tripToDate = new Date(trip.to.date);
+    if (now.getTime() > tripFromDate.getTime()) {
+      tripFromDate.setMonth(now.getMonth());
+      tripFromDate.setDate(now.getDate());
+      trip.from.date = `${getDate(tripFromDate)}T${getTime(tripFromDate)}`;
+
+      tripToDate.setMonth(now.getMonth());
+      tripToDate.setDate(now.getDate());
+      trip.to.date = `${getDate(tripToDate)}T${getTime(tripToDate)}`;
+    }
+    return trip;
+  });
+}
+
+const updatedTrips = updateDates(trips);
+console.log(updatedTrips);
 
 const popFromDestinations = popDestinations.map((item) => item.from);
 
@@ -30,7 +51,7 @@ app.get("/trips/:from/:to/:date", (req, res) => {
   const from = req.params.from;
   const to = req.params.to;
   const date = req.params.date;
-  const tripList = trips.filter(
+  const tripList = updatedTrips.filter(
     (item) =>
       item.from.city.toLowerCase() === from &&
       item.to.city.toLocaleLowerCase() === to &&

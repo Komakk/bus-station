@@ -2,18 +2,9 @@ import { useState } from "react";
 import Navigation from "./components/Navigation";
 import PassengerForm from "./components/PassengerForm";
 import { nanoid } from "nanoid";
-
-interface Passenger {
-  id: string;
-  firstname: string;
-  lastname: string;
-  type: string;
-  seat: string;
-  luggage: boolean;
-  ensurance: boolean;
-}
-
-const ROUTE_PRICE = 300;
+import { Passenger, Trip } from "./types/types";
+import { useLocation } from "react-router-dom";
+import { getDate, getDayAndMonth, getTime } from "../utils/utils";
 
 export default function Checkout() {
   const [passengers, setPassengers] = useState<Passenger[]>([
@@ -27,6 +18,10 @@ export default function Checkout() {
       ensurance: false,
     },
   ]);
+  const location = useLocation();
+  const { trip } = location.state;
+  const departureTime = new Date(trip.from.date);
+  const arrivalTime = new Date(trip.to.date);
 
   function addPassenger() {
     setPassengers([
@@ -76,10 +71,10 @@ export default function Checkout() {
   );
 
   const booking = {
-    adult: passengerTypes.adult * ROUTE_PRICE,
-    child: (passengerTypes.child * ROUTE_PRICE) / 2,
+    adult: passengerTypes.adult * trip.price,
+    child: (passengerTypes.child * trip.price) / 2,
     luggage:
-      passengers.filter((item) => item.luggage).length * ROUTE_PRICE * 0.18,
+      passengers.filter((item) => item.luggage).length * trip.price * 0.18,
     ensurance: passengers.filter((item) => item.ensurance).length * 25,
   };
 
@@ -99,7 +94,7 @@ export default function Checkout() {
                 passenger={passenger}
                 editPassenger={editPassenger}
                 deletePassenger={deletePassenger}
-                routePrice={ROUTE_PRICE}
+                routePrice={trip.price}
               />
             ))}
             <div className=" mb-5 text-center">
@@ -143,12 +138,16 @@ export default function Checkout() {
                   <div className=" flex py-4 text-sm font-medium">
                     <div className=" pr-3">
                       <div className=" mb-4">
-                        <p>07:50</p>
-                        <p className=" text-xs font-normal">18 may</p>
+                        <p>{getTime(departureTime)}</p>
+                        <p className=" text-xs font-normal">
+                          {getDayAndMonth(departureTime)}
+                        </p>
                       </div>
                       <div>
-                        <p>09:15</p>
-                        <p className=" text-xs font-normal">18 may</p>
+                        <p>{getTime(arrivalTime)}</p>
+                        <p className=" text-xs font-normal">
+                          {getDayAndMonth(arrivalTime)}
+                        </p>
                       </div>
                     </div>
                     <div className=" py-1 flex flex-col justify-between z-10">
@@ -157,8 +156,8 @@ export default function Checkout() {
                     </div>
                     <div className=" my-1 relative border-l -left-[6px]"></div>
                     <div className=" pl-3 flex flex-col justify-between">
-                      <p>Izhevsk</p>
-                      <p>Votkinsk</p>
+                      <p>{trip.from.city}</p>
+                      <p>{trip.to.city}</p>
                     </div>
                   </div>
                   <div className="border-t"></div>
@@ -180,10 +179,10 @@ export default function Checkout() {
                   {booking.luggage > 0 && (
                     <div className="mt-3 border-t">
                       <p className=" py-3">
-                        {booking.luggage / (ROUTE_PRICE * 0.18)} Additional
+                        {booking.luggage / (trip.price * 0.18)} Additional
                         luggage
                         <span className=" float-right">
-                          {booking.luggage}rub
+                          {Math.floor(booking.luggage)}rub
                         </span>
                       </p>
                     </div>

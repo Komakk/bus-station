@@ -8,7 +8,7 @@ export default function PopRouteItem({
   from: string;
   to: string;
 }) {
-  const link = `/${from}/${to}/${getDate(new Date())}`;
+  const link = `/${from}/${to}/${getDate(new Date())}`.toLowerCase();
   return (
     <div className=" mt-6 h-56 w-full sm:mt-0 sm:inline-block sm:w-1/3 sm:p-3">
       <Link

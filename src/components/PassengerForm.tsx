@@ -131,7 +131,7 @@ export default function PassengerForm({
               Additional luggage
               <br></br>
               <span className=" text-sm">
-                + {routePrice * 0.18}rub (20 kg · 80×50×30 cm)
+                + {Math.floor(routePrice * 0.18)}rub (20 kg · 80×50×30 cm)
               </span>
             </span>
           </label>
