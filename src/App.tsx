@@ -3,6 +3,7 @@ import MainPage from "./MainPage";
 import Checkout from "./Checkout";
 import BusTripsPage from "./BusTripsPage";
 import { useLayoutEffect } from "react";
+import Booking from "./Booking";
 
 export default function App() {
   const location = useLocation();
@@ -17,6 +18,7 @@ export default function App() {
       <Route path="/" element={<MainPage />} />
       <Route path="/:from/:to/:date" element={<BusTripsPage />} />
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/booking" element={<Booking />} />
     </Routes>
   );
 }

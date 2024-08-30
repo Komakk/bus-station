@@ -2,7 +2,7 @@ interface Trip {
     id: string;
     from: { city: string; date: string };
     to: { city: string; date: string };
-    seats: number;
+    seats: string[];
     duration: string;
     price: number;
     provider: string;

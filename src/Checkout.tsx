@@ -3,7 +3,7 @@ import Navigation from "./components/Navigation";
 import PassengerForm from "./components/PassengerForm";
 import { nanoid } from "nanoid";
 import { Passenger, Trip } from "./types/types";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getDate, getDayAndMonth, getTime } from "../utils/utils";
 
 export default function Checkout() {
@@ -18,6 +18,7 @@ export default function Checkout() {
       ensurance: false,
     },
   ]);
+  const navigate = useNavigate();
   const location = useLocation();
   const { trip } = location.state;
   const departureTime = new Date(trip.from.date);
@@ -62,17 +63,46 @@ export default function Checkout() {
     setPassengers(remainingPassengers);
   }
 
-  const passengerTypes = passengers.reduce(
+  function postData() {
+    const data = {
+      tripId: trip.id,
+      passengers: passengers,
+    };
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    fetch("http://localhost:8000/tickets", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        navigate("/booking", {
+          replace: true,
+          state: {
+            ticketId: data,
+            tripPrice: trip.price,
+            from: trip.from,
+            to: trip.to,
+            passengers: passengers,
+          },
+        });
+      });
+  }
+
+  const bookingItemsCount = passengers.reduce(
     (prev, curr) => {
       curr.type === "Adult" ? (prev.adult += 1) : (prev.child += 1);
+      prev.luggage += prev.luggage ? 1 : 0;
+      prev.ensurance += prev.ensurance ? 1 : 0;
       return prev;
     },
-    { adult: 0, child: 0 }
+    { adult: 0, child: 0, luggage: 0, ensurance: 0 }
   );
 
   const booking = {
-    adult: passengerTypes.adult * trip.price,
-    child: (passengerTypes.child * trip.price) / 2,
+    adult: bookingItemsCount.adult * trip.price,
+    child: (bookingItemsCount.child * trip.price) / 2,
     luggage:
       passengers.filter((item) => item.luggage).length * trip.price * 0.18,
     ensurance: passengers.filter((item) => item.ensurance).length * 25,
@@ -163,16 +193,16 @@ export default function Checkout() {
                   <div className="border-t"></div>
                   <p className=" pt-3 pb-1">Passengers:</p>
                   <p>
-                    {passengerTypes.adult > 1
-                      ? `${passengerTypes.adult} Adults`
-                      : `${passengerTypes.adult} Adult`}
+                    {bookingItemsCount.adult > 1
+                      ? `${bookingItemsCount.adult} Adults`
+                      : `${bookingItemsCount.adult} Adult`}
                     <span className=" float-right">{booking.adult}rub</span>
                   </p>
-                  {passengerTypes.child > 0 && (
+                  {bookingItemsCount.child > 0 && (
                     <p>
-                      {passengerTypes.child > 1
-                        ? `${passengerTypes.child} Children`
-                        : `${passengerTypes.child} Child`}
+                      {bookingItemsCount.child > 1
+                        ? `${bookingItemsCount.child} Children`
+                        : `${bookingItemsCount.child} Child`}
                       <span className=" float-right">{booking.child}rub</span>
                     </p>
                   )}
@@ -212,7 +242,10 @@ export default function Checkout() {
                 </div>
               </div>
               <div className=" mx-3 py-4">
-                <button className="px-3 py-2 w-full bg-orange-400 text-lg">
+                <button
+                  className="px-3 py-2 w-full bg-orange-400 text-lg"
+                  onClick={() => postData()}
+                >
                   Pay now
                 </button>
               </div>
