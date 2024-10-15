@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import QRCode, { QRCodeToDataURLOptions } from "qrcode";
+import { BookingType, Passenger } from "./types/types";
 
 export default function Booking() {
   const ref = useRef<HTMLImageElement>(null);
   const location = useLocation();
-  const { data } = location.state;
+  const { ticketId, from, to, passengers, booking } = location.state;
+  const typifiedBooking: BookingType = booking;
 
   useEffect(() => {
     const options: QRCodeToDataURLOptions = {
@@ -15,7 +17,7 @@ export default function Booking() {
       width: 120,
     };
 
-    QRCode.toDataURL("987654321", options, function (err, url) {
+    QRCode.toDataURL(ticketId, options, function (err, url) {
       if (err) throw err;
 
       if (ref.current) ref.current.src = url;
@@ -30,13 +32,14 @@ export default function Booking() {
             <b>Bus Ticket</b>
           </h1>
           <p>
-            <b>Ticket Number:</b> 123456789
+            <b>Ticket Number:</b> {ticketId}
           </p>
           <p>
-            <b>Departure:</b> Izhevsk
+            <b>Departure:</b> {from.city}{" "}
+            {String(from.date).split("T").join(" ")}
           </p>
           <p className="pb-1">
-            <b>Arrival:</b> Votkinsk
+            <b>Arrival:</b> {to.city} {String(to.date).split("T").join(" ")}
           </p>
           <table className="w-full">
             <caption className="text-left">
@@ -50,41 +53,46 @@ export default function Booking() {
               </tr>
             </thead>
             <tbody className=" bg-gray-50">
-              <tr className=" h-7 px-2 even:bg-gray-200">
-                <td className="pl-2">John Dee</td>
-                <td>Adult</td>
-                <td>3</td>
-              </tr>
-              <tr className=" h-7 px-2 even:bg-gray-200">
-                <td className="pl-2">John Dee</td>
-                <td>Adult</td>
-                <td>3</td>
-              </tr>
-              <tr className=" h-7 px-2 even:bg-gray-200">
-                <td className="pl-2">John Dee</td>
-                <td>Adult</td>
-                <td>3</td>
-              </tr>
-              <tr className=" h-7 px-2 even:bg-gray-200">
-                <td className="pl-2">John Dee</td>
-                <td>Adult</td>
-                <td>3</td>
-              </tr>
+              {passengers.map((passenger: Passenger) => (
+                <tr key={passenger.id} className=" h-7 px-2 even:bg-gray-200">
+                  <td className="pl-2">{`${passenger.firstname} ${passenger.lastname}`}</td>
+                  <td>{passenger.type}</td>
+                  <td>{passenger.seat}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
           <p className=" pt-5">
-            {1 > 1 ? `${2} Adults` : `${1} Adult`}
-            <span className=" float-right">{300}rub</span>
+            {`${typifiedBooking.adult.count} ${
+              typifiedBooking.adult.count > 1 ? "Adults" : "Adult"
+            }`}
+            <span className=" float-right">
+              {typifiedBooking.adult.price}rub
+            </span>
           </p>
           <div className=" border-t"></div>
           <p>
-            {1 > 1 ? `${2} Children` : `${1} Child`}
-            <span className=" float-right">{150}rub</span>
+            {`${typifiedBooking.child.count} ${
+              typifiedBooking.child.count > 1 ? "Children" : "Child"
+            }`}
+            <span className=" float-right">
+              {typifiedBooking.child.price}rub
+            </span>
           </p>
           <div className="border-t">
             <p className="">
-              {1} Ensurance
-              <span className=" float-right">{20}rub</span>
+              {typifiedBooking.luggage.count} Luggage
+              <span className=" float-right">
+                {typifiedBooking.luggage.price}rub
+              </span>
+            </p>
+          </div>
+          <div className="border-t">
+            <p className="">
+              {typifiedBooking.ensurance.count} Ensurance
+              <span className=" float-right">
+                {typifiedBooking.ensurance.price}rub
+              </span>
             </p>
           </div>
           <div className="border-t"></div>
@@ -95,7 +103,10 @@ export default function Booking() {
           <p className="py-3 text-2xl font-medium">
             Total
             <span className=" float-right">
-              {360}
+              {Object.values(typifiedBooking).reduce(
+                (prev, cur) => prev + cur.price,
+                0
+              )}
               rub
             </span>
           </p>

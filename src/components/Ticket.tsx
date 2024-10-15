@@ -33,13 +33,13 @@ export default function Ticket({ trip }: TicketProps) {
               <span className=" text-2xl">{trip.price}</span> rub
             </p>
             <p className=" text-xs text-gray-700">
-              {trip.seats.filter((s) => s === "f").length} free seats
+              {trip.seats.filter((s) => s.state === "free").length} free seats
             </p>
           </div>
           <div className="w-3/5 md:w-4/5 md:my-2">
             <Link
               to={"/checkout"}
-              state={{ trip: trip }}
+              state={{ data: trip }}
               className=" inline-block text-center px-3 py-2 w-full bg-green-500 text-white"
             >
               Continue

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Navigation from "./components/Navigation";
-import PassengerForm from "./components/PassengerForm";
+import PassengerSection from "./components/PassengerSection";
 import { nanoid } from "nanoid";
 import { Passenger, Trip } from "./types/types";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -18,9 +18,11 @@ export default function Checkout() {
       ensurance: false,
     },
   ]);
+  const [contacts, setContacts] = useState({ email: "", phone: "" });
   const navigate = useNavigate();
   const location = useLocation();
-  const { trip } = location.state;
+  const { data } = location.state;
+  const trip: Trip = data;
   const departureTime = new Date(trip.from.date);
   const arrivalTime = new Date(trip.to.date);
 
@@ -67,6 +69,7 @@ export default function Checkout() {
     const data = {
       tripId: trip.id,
       passengers: passengers,
+      contacts: contacts,
     };
     const requestOptions = {
       method: "POST",
@@ -76,15 +79,14 @@ export default function Checkout() {
     fetch("http://localhost:8000/tickets", requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         navigate("/booking", {
           replace: true,
           state: {
-            ticketId: data,
-            tripPrice: trip.price,
+            ticketId: data.id,
             from: trip.from,
             to: trip.to,
-            passengers: passengers,
+            passengers: data.passengers,
+            booking: booking,
           },
         });
       });
@@ -93,32 +95,53 @@ export default function Checkout() {
   const bookingItemsCount = passengers.reduce(
     (prev, curr) => {
       curr.type === "Adult" ? (prev.adult += 1) : (prev.child += 1);
-      prev.luggage += prev.luggage ? 1 : 0;
-      prev.ensurance += prev.ensurance ? 1 : 0;
+      prev.luggage += curr.luggage ? 1 : 0;
+      prev.ensurance += curr.ensurance ? 1 : 0;
       return prev;
     },
     { adult: 0, child: 0, luggage: 0, ensurance: 0 }
   );
 
   const booking = {
-    adult: bookingItemsCount.adult * trip.price,
-    child: (bookingItemsCount.child * trip.price) / 2,
-    luggage:
-      passengers.filter((item) => item.luggage).length * trip.price * 0.18,
-    ensurance: passengers.filter((item) => item.ensurance).length * 25,
+    adult: {
+      count: bookingItemsCount.adult,
+      price: bookingItemsCount.adult * trip.price,
+    },
+    child: {
+      count: bookingItemsCount.child,
+      price: (bookingItemsCount.child * trip.price) / 2,
+    },
+    luggage: {
+      count: bookingItemsCount.luggage,
+      price: bookingItemsCount.luggage * trip.price * 0.18,
+    },
+    ensurance: {
+      count: bookingItemsCount.ensurance,
+      price: bookingItemsCount.ensurance * 25,
+    },
   };
 
   return (
     <>
       <Navigation />
       <main className=" relative top-14 text-gray-800">
-        <div className="md:w-200 lg:w-220 xl:w-[1170px] mx-auto lg:flex">
+        <form
+          className="md:w-200 lg:w-220 xl:w-[1170px] mx-auto lg:flex"
+          onSubmit={(e) => {
+            e.preventDefault();
+            postData();
+          }}
+        >
           <div className=" lg:w-3/4">
             <h1 className=" p-3 text-2xl font-medium text-blue-800">
-              Passengers
+              Enter passengers and contacts
             </h1>
+            <p className=" p-3">
+              <span className=" text-red-600">*</span> indicates a required
+              field
+            </p>
             {passengers.map((passenger, i) => (
-              <PassengerForm
+              <PassengerSection
                 key={passenger.id}
                 index={i + 1}
                 passenger={passenger}
@@ -130,7 +153,10 @@ export default function Checkout() {
             <div className=" mb-5 text-center">
               <button
                 className="px-3 py-2 border-2 w-72"
-                onClick={addPassenger}
+                type="button"
+                onClick={(e) => {
+                  addPassenger();
+                }}
               >
                 <i className="fa fa-plus pr-1" aria-hidden="true"></i>Add
                 passenger
@@ -142,10 +168,17 @@ export default function Checkout() {
               </h2>
               <div className="px-2 pb-4 md:flex">
                 <div className="md:w-1/2 md:pr-2">
-                  <label className="pt-2 inline-block">Email</label>
+                  <label className="pt-2 inline-block">
+                    Email <span className=" text-red-600">*</span>
+                  </label>
                   <input
-                    className="w-full text-gray-800 px-3 py-2 border-2 outline-blue-300"
+                    className="w-full text-gray-800 px-3 py-2 border-2 outline-blue-300 invalid:outline-red-400 invalid:outline invalid:outline-2 invalid:border-none"
                     type="email"
+                    value={contacts.email}
+                    onChange={(e) =>
+                      setContacts({ ...contacts, email: e.target.value })
+                    }
+                    required
                   />
                 </div>
                 <div className="md:w-1/2 md:pl-2">
@@ -153,6 +186,10 @@ export default function Checkout() {
                   <input
                     className="w-full text-gray-800 px-3 py-2 border-2 outline-blue-300"
                     type="number"
+                    value={contacts.phone}
+                    onChange={(e) =>
+                      setContacts({ ...contacts, phone: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -196,33 +233,36 @@ export default function Checkout() {
                     {bookingItemsCount.adult > 1
                       ? `${bookingItemsCount.adult} Adults`
                       : `${bookingItemsCount.adult} Adult`}
-                    <span className=" float-right">{booking.adult}rub</span>
+                    <span className=" float-right">
+                      {booking.adult.price}rub
+                    </span>
                   </p>
                   {bookingItemsCount.child > 0 && (
                     <p>
                       {bookingItemsCount.child > 1
                         ? `${bookingItemsCount.child} Children`
                         : `${bookingItemsCount.child} Child`}
-                      <span className=" float-right">{booking.child}rub</span>
+                      <span className=" float-right">
+                        {booking.child.price}rub
+                      </span>
                     </p>
                   )}
-                  {booking.luggage > 0 && (
+                  {bookingItemsCount.luggage > 0 && (
                     <div className="mt-3 border-t">
                       <p className=" py-3">
-                        {booking.luggage / (trip.price * 0.18)} Additional
-                        luggage
+                        {bookingItemsCount.luggage} Additional luggage
                         <span className=" float-right">
-                          {Math.floor(booking.luggage)}rub
+                          {Math.floor(booking.luggage.price)}rub
                         </span>
                       </p>
                     </div>
                   )}
-                  {booking.ensurance > 0 && (
+                  {bookingItemsCount.ensurance > 0 && (
                     <div className="border-t">
                       <p className=" py-3">
-                        {booking.ensurance / 25} Ensurance
+                        {bookingItemsCount.ensurance} Ensurance
                         <span className=" float-right">
-                          {booking.ensurance}rub
+                          {booking.ensurance.price}rub
                         </span>
                       </p>
                     </div>
@@ -235,7 +275,10 @@ export default function Checkout() {
                   <p className="py-3 text-2xl font-medium">
                     Total
                     <span className=" float-right">
-                      {Object.values(booking).reduce((prev, cur) => prev + cur)}
+                      {Object.values(booking).reduce(
+                        (prev, cur) => prev + cur.price,
+                        0
+                      )}
                       rub
                     </span>
                   </p>
@@ -243,15 +286,15 @@ export default function Checkout() {
               </div>
               <div className=" mx-3 py-4">
                 <button
+                  type="submit"
                   className="px-3 py-2 w-full bg-orange-400 text-lg"
-                  onClick={() => postData()}
                 >
                   Pay now
                 </button>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </main>
     </>
   );

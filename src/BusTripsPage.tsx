@@ -7,6 +7,7 @@ import SideBar from "./components/SideBar";
 import Ticket from "./components/Ticket";
 import { useParams } from "react-router-dom";
 import { capitalizeFirstLetter } from "../utils/utils";
+import { Trip } from "./types/types";
 
 export default function BusTripsPage() {
   const [trips, setTrips] = useState([]);
@@ -61,7 +62,7 @@ export default function BusTripsPage() {
               <span className="fa fa-arrow-down text-gray-500"></span>
             </section>
             {trips.length ? (
-              trips.map((trip, i) => <Ticket key={i} trip={trip} />)
+              trips.map((trip: Trip, i) => <Ticket key={i} trip={trip} />)
             ) : (
               <p className=" text-center text-lg">{`Trips ${capitalizeFirstLetter(
                 from

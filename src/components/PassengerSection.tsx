@@ -11,7 +11,7 @@ interface Passenger {
   ensurance: boolean;
 }
 
-interface PassengerFormProps {
+interface PassengerSectionProps {
   index: number;
   passenger: Passenger;
   editPassenger: (id: string, name: string, value: string | boolean) => void;
@@ -20,18 +20,18 @@ interface PassengerFormProps {
   routePrice: number;
 }
 
-export default function PassengerForm({
+export default function PassengerSection({
   index,
   passenger,
   editPassenger,
   deletePassenger,
   routePrice,
-}: PassengerFormProps) {
+}: PassengerSectionProps) {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
 
   return (
     <>
-      <form className="mx-3 border shadow-md mb-5">
+      <section className="mx-3 border shadow-md mb-5">
         <h2 className="px-2 py-3 text-xl font-medium border-b text-blue-800 flex items-center justify-between">
           Passenger {index}
           {passenger.id !== "p0" && (
@@ -47,27 +47,33 @@ export default function PassengerForm({
         <div className="px-2">
           <div className="md:flex">
             <div className="md:w-1/2 md:pr-2">
-              <label className=" pt-2 inline-block">First Name</label>
+              <label className=" pt-2 inline-block">
+                First Name <span className=" text-red-600">*</span>
+              </label>
               <input
-                className="w-full text-gray-800 px-3 py-2 border-2 outline-blue-300"
+                className="w-full text-gray-800 px-3 py-2 border-2 outline-blue-300 invalid:outline-red-400 invalid:outline invalid:outline-2 invalid:border-none"
                 placeholder="Ivan"
-                name="firstname"
+                name={"firstname"}
                 value={passenger.firstname}
-                onChange={(e) =>
-                  editPassenger(passenger.id, e.target.name, e.target.value)
-                }
+                onChange={(e) => {
+                  editPassenger(passenger.id, e.target.name, e.target.value);
+                }}
+                required
               ></input>
             </div>
             <div className="md:w-1/2 md:pl-2">
-              <label className=" pt-2 inline-block">Last Name</label>
+              <label className=" pt-2 inline-block">
+                Last Name <span className=" text-red-600">*</span>
+              </label>
               <input
-                className="w-full text-gray-800 px-3 py-2 border-2 outline-blue-300"
+                className="w-full text-gray-800 px-3 py-2 border-2 outline-blue-300 invalid:outline-red-400 invalid:outline invalid:outline-2 invalid:border-none"
                 placeholder="Ivanov"
-                name="lastname"
+                name={"lastname"}
                 value={passenger.lastname}
                 onChange={(e) =>
                   editPassenger(passenger.id, e.target.name, e.target.value)
                 }
+                required
               ></input>
             </div>
           </div>
@@ -75,7 +81,7 @@ export default function PassengerForm({
             <label className="pt-2 block">Type</label>
             <select
               className=" w-full h-[42px] text-gray-800 px-2 border-2 outline-blue-300"
-              name="type"
+              name={"type"}
               value={passenger.type}
               onChange={(e) =>
                 editPassenger(passenger.id, e.target.name, e.target.value)
@@ -85,33 +91,19 @@ export default function PassengerForm({
               <option value={"Child"}>Child</option>
             </select>
           </div>
-        </div>
-        <div className=" flex px-2 pb-4">
-          <div className=" w-1/2 pr-2">
-            <label className="pt-2 inline-block">Seat</label>
-            <select
-              className=" w-full h-[42px] text-gray-800 px-2 border-2 outline-blue-300"
-              name="seat"
-              value={passenger.seat}
-              onChange={(e) =>
-                editPassenger(passenger.id, e.target.name, e.target.value)
-              }
-            >
-              <option value={"any"}>Any</option>
-              <option value={"1"}>1</option>
-              <option value={"2"}>2</option>
-              <option value={"3"}>3</option>
-              <option value={"4"}>4</option>
-              <option value={"5"}>5</option>
-            </select>
-          </div>
-          <div className=" pl-2 w-1/2 flex items-end">
+          <div className="md:w-1/2 md:pr-2 pb-4">
+            <label className="pt-2 block">Seat</label>
             <button
               type="button"
-              className="px-3 py-2 w-full border-2"
+              className="px-3 py-2 w-full border-2 font-semibold flex items-center justify-between"
               onClick={() => setIsPanelOpen(true)}
             >
-              Bus seating plan
+              <span>
+                {passenger.seat === "any"
+                  ? "Select your seat"
+                  : `Your seat: ${passenger.seat}`}
+              </span>
+              <i className="fa fa-chevron-right" aria-hidden="true"></i>
             </button>
           </div>
         </div>
@@ -121,7 +113,7 @@ export default function PassengerForm({
             <input
               className="h-4 w-4"
               type="checkbox"
-              name="luggage"
+              name={"luggage"}
               checked={passenger.luggage}
               onChange={(e) =>
                 editPassenger(passenger.id, e.target.name, e.target.checked)
@@ -142,7 +134,7 @@ export default function PassengerForm({
             <input
               className="h-4 w-4"
               type="checkbox"
-              name="ensurance"
+              name={"ensurance"}
               checked={passenger.ensurance}
               onChange={(e) =>
                 editPassenger(passenger.id, e.target.name, e.target.checked)
@@ -150,10 +142,7 @@ export default function PassengerForm({
             />
             <span className="pl-2 align-middle">
               Add ensurance&nbsp;
-              <a
-                className=" text-xs text-gray-500 cursor-pointer underline"
-                href="#"
-              >
+              <a className=" text-xs text-gray-500 cursor-pointer underline">
                 (Strahovanie Group)
               </a>
               <br></br>
@@ -161,7 +150,7 @@ export default function PassengerForm({
             </span>
           </label>
         </div>
-      </form>
+      </section>
       {isPanelOpen && (
         <SeatReservationPanel
           passenger={passenger}
