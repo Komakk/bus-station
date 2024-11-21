@@ -26,18 +26,30 @@ function updateDates(trips) {
   });
 }
 
-function createTicket(data) {
-  const newTicket = {};
-  newTicket.id = nanoid();
-  newTicket.tripId = data.tripId;
-  newTicket.passengers = data.passengers.map((passenger) => {
+function createTicket() {
+  const newTicket = {
+    id: nanoid(),
+    paid: false,
+  };
+  tickets.push(newTicket);
+
+  return newTicket;
+}
+
+function editTicket({ ticket, tripId, passengers, contacts }) {
+  const newTicket = tickets.find((item) => item.id === ticket.id);
+  newTicket.tripId = tripId;
+  newTicket.passengers = passengers.map((passenger) => {
     return {
       ...passenger,
-      seat: passenger.seat === "any" ? setSeat(data.tripId) : passenger.seat,
+      seat:
+        passenger.seat === "any"
+          ? findSeat(tripId, ticket.id, passenger.id)
+          : passenger.seat,
     };
   });
-  newTicket.contacts = data.contacts;
-  tickets.push(newTicket);
+  newTicket.contacts = contacts;
+  newTicket.paid = true;
   return newTicket;
 }
 
@@ -50,9 +62,7 @@ function updateSeats({ tripId, seatNumber, reservationId, passengerId }) {
       (seat) => seat.reservation.passengerId === passengerId
     );
     if (prevSeat) clearSeat(prevSeat);
-
-    seat.state = "occupied";
-    seat.reservation = { id: reservationId, passengerId };
+    setSeat(seat, reservationId, passengerId);
     console.log("if free", trip.seats);
 
     return trip.seats;
@@ -71,20 +81,26 @@ function updateSeats({ tripId, seatNumber, reservationId, passengerId }) {
   }
 }
 
-function setSeat(tripId) {
+function findSeat(tripId, ticketId, passengerId) {
   const trip = updatedTrips.find((item) => item.id === tripId);
   const seat = trip.seats.find((seat) => seat.state === "free");
-  seat.state = "occupied";
+  //TODO Add error if no free seat
+  setSeat(seat, ticketId, passengerId);
   return seat.number;
 }
 
 function clearSeat(seat) {
   seat.state = "free";
-  seat.reservation = "";
+  seat.reservation = { id: "", passengerId: "" };
+}
+
+function setSeat(seat, ticketId, passengerId) {
+  seat.state = "occupied";
+  seat.reservation = { id: ticketId, passengerId };
 }
 
 const updatedTrips = updateDates(trips);
-const tickets = [];
+let tickets = [];
 const popFromDestinations = popDestinations.map((item) => item.from);
 
 app.get("/getPopRoutes/:departure", (req, res) => {
@@ -142,10 +158,29 @@ app.put("/seat", (req, res) => {
 });
 
 //TODO: add ckecking request state
-app.post("/tickets", (req, res) => {
-  const data = req.body;
-  //console.log(data);
-  const ticket = createTicket(data);
+app.post("/ticket", (req, res) => {
+  console.log(req.body);
+
+  const tripId = req.body.tripid;
+  const newTicket = createTicket();
+  setTimeout(() => {
+    if (!newTicket.paid) {
+      const trip = updatedTrips.find((trip) => trip.id === tripId);
+      trip.seats.forEach((seat) => {
+        if (seat.reservation.id === newTicket.id) clearSeat(seat);
+      });
+      tickets = tickets.filter((ticket) => ticket.id !== newTicket.id);
+      console.log(
+        `Reservetion time expired. Ticket ${newTicket.id} and reserved seats was deleted`
+      );
+    }
+  }, 1000 * 60);
+
+  res.json(newTicket);
+});
+
+app.put("/ticket", (req, res) => {
+  const ticket = editTicket(req.body);
   res.json(ticket);
 });
 

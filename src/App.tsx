@@ -1,4 +1,10 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Route,
+  RouterProvider,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import MainPage from "./MainPage";
 import Checkout from "./Checkout";
 import BusTripsPage from "./BusTripsPage";
@@ -14,11 +20,15 @@ export default function App() {
   }, [location.pathname]);
 
   return (
-    <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path="/:from/:to/:date" element={<BusTripsPage />} />
-      <Route path="/checkout" element={<Checkout />} />
-      <Route path="/booking" element={<Booking />} />
-    </Routes>
+    // <Routes>
+    //   <Route path="/" element={<MainPage />} />
+    //   <Route path="/:from/:to/:date" element={<BusTripsPage />} />
+    //   <Route
+    //     path="/checkout"
+    //     element={<Checkout />}
+    //     errorElement={<p>This error page</p>}
+    //   />
+    //   <Route path="/booking" element={<Booking />} />
+    // </Routes>
   );
 }

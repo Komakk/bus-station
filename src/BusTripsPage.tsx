@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import DayPicker from "./components/DayPicker";
 import Footer from "./components/Footer";
 import Navigation from "./components/Navigation";
 import SearchForm from "./components/SearchForm";
 import SideBar from "./components/SideBar";
 import Ticket from "./components/Ticket";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { capitalizeFirstLetter } from "../utils/utils";
 import { Trip } from "./types/types";
 
@@ -14,6 +14,11 @@ export default function BusTripsPage() {
   const { from, to, date } = useParams();
 
   const currentDate = date && new Date(`${date}T00:00:00`);
+
+  // scroll to top of page after a page transition.
+  useLayoutEffect(() => {
+    document.documentElement.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  });
 
   useEffect(() => {
     let ignore = false;

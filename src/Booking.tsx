@@ -27,7 +27,7 @@ export default function Booking() {
   return (
     <>
       <main className=" relative top-14 text-gray-800">
-        <div className=" relative p-3 max-w-200 mx-auto bg-slate-50">
+        <div className=" relative mb-5 p-3 max-w-200 mx-auto bg-slate-50">
           <h1 className=" pb-3 text-2xl text-blue-800">
             <b>Bus Ticket</b>
           </h1>

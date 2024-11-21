@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Navigation from "./components/Navigation";
 import PassengerSection from "./components/PassengerSection";
 import { nanoid } from "nanoid";
 import { Passenger, Trip } from "./types/types";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getDate, getDayAndMonth, getTime } from "../utils/utils";
+import { getDate, getDayAndMonth, getMinAndSec, getTime } from "../utils/utils";
+import useTimer from "./custom-hooks/useTimer";
+import Footer from "./components/Footer";
 
 export default function Checkout() {
   const [passengers, setPassengers] = useState<Passenger[]>([
     {
-      id: "p0",
+      id: nanoid(),
       firstname: "",
       lastname: "",
       type: "Adult",
@@ -21,10 +23,30 @@ export default function Checkout() {
   const [contacts, setContacts] = useState({ email: "", phone: "" });
   const navigate = useNavigate();
   const location = useLocation();
-  const { data } = location.state;
-  const trip: Trip = data;
+
+  if (!location.state) throw new Error("No trip and ticket data");
+
+  const timer = useTimer(new Date().getTime() + 999 * 60);
+
+  const trip: Trip = location.state.trip;
+  const ticket: { id: string; paid: boolean } = location.state.ticket;
   const departureTime = new Date(trip.from.date);
   const arrivalTime = new Date(trip.to.date);
+
+  console.log(ticket);
+
+  // scroll to top of page after a page transition.
+  useLayoutEffect(() => {
+    document.documentElement.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      console.log("checkout unmount");
+      //clear location state
+      window.history.replaceState(null, "");
+    };
+  }, []);
 
   function addPassenger() {
     setPassengers([
@@ -67,16 +89,17 @@ export default function Checkout() {
 
   function postData() {
     const data = {
+      ticket: ticket,
       tripId: trip.id,
       passengers: passengers,
       contacts: contacts,
     };
     const requestOptions = {
-      method: "POST",
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     };
-    fetch("http://localhost:8000/tickets", requestOptions)
+    fetch("http://localhost:8000/ticket", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         navigate("/booking", {
@@ -124,7 +147,7 @@ export default function Checkout() {
   return (
     <>
       <Navigation />
-      <main className=" relative top-14 text-gray-800">
+      <main className=" relative text-gray-800 lg:top-14">
         <form
           className="md:w-200 lg:w-220 xl:w-[1170px] mx-auto lg:flex"
           onSubmit={(e) => {
@@ -132,7 +155,17 @@ export default function Checkout() {
             postData();
           }}
         >
-          <div className=" lg:w-3/4">
+          <div className="relative lg:w-3/4">
+            <div className=" mr-5 sticky top-0 left-full h-14 w-16 z-40 flex items-center justify-center lg:hidden">
+              <span
+                className={`text-xl p-1 border-2 ${
+                  timer < 6000 && "bg-red-500 text-white"
+                }`}
+              >
+                {getMinAndSec(new Date(timer))}
+              </span>
+            </div>
+
             <h1 className=" p-3 text-2xl font-medium text-blue-800">
               Enter passengers and contacts
             </h1>
@@ -195,12 +228,20 @@ export default function Checkout() {
               </div>
             </div>
           </div>
-          <div className=" relative lg:w-1/4">
-            <div className="lg:fixed lg:w-1/4 lg:pr-12">
+          <div className="  lg:w-1/4">
+            <div className="lg:sticky top-16 w-full">
               <div className="border mx-3 mt-5 shadow-md">
-                <h2 className="px-2 py-3 text-xl font-medium border-b text-blue-800">
+                <h2 className="px-2 py-3 text-xl   font-medium border-b text-blue-800">
                   Your booking
+                  <span
+                    className={`hidden lg:inline px-1 border-2 float-right ${
+                      timer < 6000 && "bg-red-500 text-white"
+                    }`}
+                  >
+                    {getMinAndSec(new Date(timer))}
+                  </span>
                 </h2>
+
                 <div className="px-2">
                   <div className=" flex py-4 text-sm font-medium">
                     <div className=" pr-3">
@@ -296,6 +337,36 @@ export default function Checkout() {
           </div>
         </form>
       </main>
+      <Footer />
+      {timer < 1000 && (
+        <div className=" fixed top-0 left-0 w-full h-full z-50 backdrop-brightness-50 flex items-center justify-center">
+          <div className=" p-4 max-w-80 bg-white">
+            <p className="pt-2 pb-4 text-xl font-medium text-center">
+              <i
+                className="pr-1 fa fa-exclamation-triangle"
+                aria-hidden="true"
+              ></i>
+              Time expired.
+            </p>
+            <p className="pb-4 text-center">
+              Please search again to continue using the app.
+            </p>
+            <button
+              onClick={() => {
+                navigate(
+                  `/${trip.from.city}/${trip.to.city}/${getDate(
+                    new Date(trip.from.date)
+                  )}`.toLowerCase(),
+                  { replace: true }
+                );
+              }}
+              className=" px-4 py-2 w-full bg-orange-400"
+            >
+              Go back to search
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

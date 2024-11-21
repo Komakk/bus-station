@@ -35,16 +35,14 @@ function BusSeat({ seat, isSelected, handleSeatClick }: BusSeatProps) {
   }
 }
 
-const MOCK_RESERVATION = "789";
-
 export default function SeatReservationPanel({
   passenger,
   setIsPanelOpen,
   editPassenger,
 }: SeatReservationPanelProps) {
   const location = useLocation();
-  const { data } = location.state;
-  const trip: Trip = data;
+  const trip: Trip = location.state.trip;
+  const ticket: { id: string; paid: boolean } = location.state.ticket;
   const [busSeats, setBusSeats] = useState(trip.seats);
 
   useEffect(() => {
@@ -58,7 +56,7 @@ export default function SeatReservationPanel({
   }
 
   function handleSeatClick(seatNumber: string) {
-    putSeat(trip.id, seatNumber, MOCK_RESERVATION, passenger.id);
+    putSeat(trip.id, seatNumber, ticket.id, passenger.id);
   }
 
   function putSeat(

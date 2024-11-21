@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Trip } from "../types/types";
 import { getTime } from "../../utils/utils";
 
@@ -7,8 +7,22 @@ interface TicketProps {
 }
 
 export default function Ticket({ trip }: TicketProps) {
+  const navigate = useNavigate();
   const departureTime = new Date(trip.from.date);
   const arrivalTime = new Date(trip.to.date);
+
+  function handleContinueClick() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tripid: trip.id }),
+    };
+    fetch("http://localhost:8000/ticket", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        navigate("/checkout", { state: { ticket: data, trip: trip } });
+      });
+  }
   return (
     <div className=" mb-5 bg-slate-50 md:bg-white shadow-lg">
       <div className=" md:flex md:bg-slate-50">
@@ -37,13 +51,12 @@ export default function Ticket({ trip }: TicketProps) {
             </p>
           </div>
           <div className="w-3/5 md:w-4/5 md:my-2">
-            <Link
-              to={"/checkout"}
-              state={{ data: trip }}
+            <button
+              onClick={handleContinueClick}
               className=" inline-block text-center px-3 py-2 w-full bg-green-500 text-white"
             >
               Continue
-            </Link>
+            </button>
           </div>
         </div>
       </div>

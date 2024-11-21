@@ -35,7 +35,7 @@ export default function SideBar() {
         </p>
       </div>
       <div className=" text-blue-700 text-center">
-        <a>{"All news >>"}</a>
+        <a href="/news">{"All news >>"}</a>
       </div>
       <div className=" mt-5">
         <VKWidget />

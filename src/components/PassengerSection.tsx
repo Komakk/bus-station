@@ -34,7 +34,7 @@ export default function PassengerSection({
       <section className="mx-3 border shadow-md mb-5">
         <h2 className="px-2 py-3 text-xl font-medium border-b text-blue-800 flex items-center justify-between">
           Passenger {index}
-          {passenger.id !== "p0" && (
+          {index !== 1 && (
             <button
               className="text-gray-500 text-xs"
               onClick={() => deletePassenger(passenger.id)}

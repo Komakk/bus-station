@@ -12,6 +12,13 @@ export function getTime(date) {
     .padStart(2, "0")}`;
 }
 
+export function getMinAndSec(date) {
+  return `${date.getMinutes().toString().padStart(2, "0")}:${date
+    .getSeconds()
+    .toString()
+    .padStart(2, "0")}`;
+}
+
 export function getDayAndMonth(date) {
   const dateArray = date.toDateString().split(" ");
   return dateArray[2] + " " + dateArray[1];

@@ -78,7 +78,7 @@ export default function Navigation() {
   return (
     <>
       <header className=" fixed z-10 bg-white w-full">
-        <div className="mx-auto flex relative items-center justify-center lg:justify-between h-14 md:w-200 lg:w-220 xl:w-[1170px]">
+        <div className="mx-auto flex relative bg-white items-center justify-center lg:justify-between h-14 md:w-200 lg:w-220 xl:w-[1170px]">
           <button
             className=" absolute left-5 text-gray-500 lg:hidden"
             onClick={() => setIsSidebarOpen(true)}
