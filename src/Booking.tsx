@@ -1,20 +1,42 @@
 import { useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import QRCode, { QRCodeToDataURLOptions } from "qrcode";
 import { BookingType, Passenger } from "./types/types";
+import { toJpeg } from "html-to-image";
 
 export default function Booking() {
   const ref = useRef<HTMLImageElement>(null);
+  const ticketImageRef = useRef<HTMLDivElement>(null);
+
+  const navigate = useNavigate();
   const location = useLocation();
   const { ticketId, from, to, passengers, booking } = location.state;
   const typifiedBooking: BookingType = booking;
+
+  function downloadTicketImage() {
+    if (ticketImageRef.current === null) return;
+
+    const options = {
+      width: ticketImageRef.current.scrollWidth,
+      height: ticketImageRef.current.scrollHeight * 1.05,
+    };
+
+    toJpeg(ticketImageRef.current, options)
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = "ticket.jpeg";
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => console.log(err));
+  }
 
   useEffect(() => {
     const options: QRCodeToDataURLOptions = {
       margin: 0,
       type: "image/jpeg",
       errorCorrectionLevel: "H",
-      width: 120,
+      width: 250,
     };
 
     QRCode.toDataURL(ticketId, options, function (err, url) {
@@ -27,10 +49,17 @@ export default function Booking() {
   return (
     <>
       <main className=" relative top-14 text-gray-800">
-        <div className=" relative mb-5 p-3 max-w-200 mx-auto bg-slate-50">
-          <h1 className=" pb-3 text-2xl text-blue-800">
+        <div
+          ref={ticketImageRef}
+          className=" relative mb-5 p-3 max-w-200 mx-auto bg-slate-50"
+        >
+          <h1 className=" text-center md:text-left pb-3 text-2xl text-blue-800">
             <b>Bus Ticket</b>
           </h1>
+          <img
+            ref={ref}
+            className="mb-5 block mx-auto static sm:absolute sm:w-32 top-4 right-4"
+          ></img>
           <p>
             <b>Ticket Number:</b> {ticketId}
           </p>
@@ -110,7 +139,7 @@ export default function Booking() {
               rub
             </span>
           </p>
-          <img ref={ref} className="absolute top-4 right-4"></img>
+
           <div className="pt-3 text-sm">
             <p>
               <b>IMPORTANT!</b> Departure and arrival times are local to each
@@ -121,6 +150,22 @@ export default function Booking() {
               copy or electronic form).
             </p>
           </div>
+        </div>
+        <div className="p-3 max-w-96 mx-auto flex justify-between text-white">
+          <button
+            className=" px-4 py-2 w-40 bg-green-500"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            Go back to search
+          </button>
+          <button
+            className=" px-4 py-2 w-40 bg-green-500"
+            onClick={downloadTicketImage}
+          >
+            Download ticket
+          </button>
         </div>
       </main>
     </>

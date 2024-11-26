@@ -353,12 +353,13 @@ export default function Checkout() {
             </p>
             <button
               onClick={() => {
-                navigate(
-                  `/${trip.from.city}/${trip.to.city}/${getDate(
-                    new Date(trip.from.date)
-                  )}`.toLowerCase(),
-                  { replace: true }
-                );
+                navigate(-1);
+                // navigate(
+                //   `/${trip.from.city}/${trip.to.city}/${getDate(
+                //     new Date(trip.from.date)
+                //   )}`.toLowerCase(),
+                //   { replace: true }
+                // );
               }}
               className=" px-4 py-2 w-full bg-orange-400"
             >
