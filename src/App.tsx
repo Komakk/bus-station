@@ -1,15 +1,7 @@
-import {
-  createBrowserRouter,
-  Route,
-  RouterProvider,
-  Routes,
-  useLocation,
-} from "react-router-dom";
-import MainPage from "./pages/home/MainPage";
-import Checkout from "./Checkout";
-import BusTripsPage from "./pages/trips/BusTripsPage";
+import { Outlet, useLocation } from "react-router-dom";
 import { useLayoutEffect } from "react";
-import Booking from "./pages/ticket/TicketPage";
+import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 
 export default function App() {
   const location = useLocation();
@@ -20,15 +12,10 @@ export default function App() {
   }, [location.pathname]);
 
   return (
-    // <Routes>
-    //   <Route path="/" element={<MainPage />} />
-    //   <Route path="/:from/:to/:date" element={<BusTripsPage />} />
-    //   <Route
-    //     path="/checkout"
-    //     element={<Checkout />}
-    //     errorElement={<p>This error page</p>}
-    //   />
-    //   <Route path="/booking" element={<Booking />} />
-    // </Routes>
+    <>
+      <Navigation />
+      <Outlet />
+      <Footer />
+    </>
   );
 }

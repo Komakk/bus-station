@@ -16,9 +16,9 @@ export default function BusTripsPage() {
   const currentDate = date && new Date(`${date}T00:00:00`);
 
   // scroll to top of page after a page transition.
-  useLayoutEffect(() => {
-    document.documentElement.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  });
+  // useLayoutEffect(() => {
+  //   document.documentElement.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  // });
 
   useEffect(() => {
     let ignore = false;
@@ -38,7 +38,6 @@ export default function BusTripsPage() {
 
   return (
     <>
-      <Navigation />
       <main className=" relative top-14">
         <div className=" bg-sky-800 text-white ">
           <SearchForm initialIsMini={true} />
@@ -77,8 +76,6 @@ export default function BusTripsPage() {
           </div>
           <SideBar />
         </div>
-
-        <Footer />
       </main>
     </>
   );

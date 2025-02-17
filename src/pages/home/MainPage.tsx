@@ -9,7 +9,6 @@ import { useLayoutEffect } from "react";
 export default function MainPage() {
   return (
     <>
-      <Navigation />
       <main className=" relative top-14">
         <section className="  bg-search-form bg-center bg-cover text-white  md:pt-20 md:pb-7 lg:pt-28 lg:pb-16">
           <div className="w-5/6 mx-auto md:border-t-4 border-blue-400"></div>
@@ -78,7 +77,6 @@ export default function MainPage() {
           <SideBar />
         </div>
       </main>
-      <Footer />
     </>
   );
 }

@@ -41,9 +41,9 @@ export default function Checkout() {
   console.log(ticket);
 
   // scroll to top of page after a page transition.
-  useLayoutEffect(() => {
-    document.documentElement.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, []);
+  // useLayoutEffect(() => {
+  //   document.documentElement.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  // }, []);
 
   useEffect(() => {
     return () => {
@@ -151,7 +151,6 @@ export default function Checkout() {
 
   return (
     <>
-      <Navigation />
       <div className="w-full md:w-200 lg:w-220 xl:w-[1170px] md:mx-auto sticky top-0 h-14 z-40 flex items-center justify-end lg:hidden">
         <span
           className={`text-xl p-1 mr-3 border-2 ${
@@ -342,7 +341,7 @@ export default function Checkout() {
           </div>
         </form>
       </main>
-      <Footer />
+
       {timer < 1000 && (
         <div className=" fixed top-0 left-0 w-full h-full z-50 backdrop-brightness-50 flex items-center justify-center">
           <div className=" p-4 max-w-80 bg-white">
