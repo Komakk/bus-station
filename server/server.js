@@ -14,10 +14,12 @@ function updateDates(trips) {
     const tripFromDate = new Date(trip.from.date);
     const tripToDate = new Date(trip.to.date);
     if (now.getTime() > tripFromDate.getTime()) {
+      tripFromDate.setFullYear(now.getFullYear());
       tripFromDate.setMonth(now.getMonth());
       tripFromDate.setDate(now.getDate());
       trip.from.date = `${getDate(tripFromDate)}T${getTime(tripFromDate)}`;
 
+      tripToDate.setFullYear(now.getFullYear());
       tripToDate.setMonth(now.getMonth());
       tripToDate.setDate(now.getDate());
       trip.to.date = `${getDate(tripToDate)}T${getTime(tripToDate)}`;
@@ -174,7 +176,7 @@ app.post("/ticket", (req, res) => {
         `Reservetion time expired. Ticket ${newTicket.id} and reserved seats was deleted`
       );
     }
-  }, 1000 * 60);
+  }, 1000 * 60 * 8);
 
   res.json(newTicket);
 });

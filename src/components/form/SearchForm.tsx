@@ -1,8 +1,8 @@
 import { useState } from "react";
-import DatePicker from "./DateInput";
+import DatePicker from "./DatePicker";
 import SearchInput from "./SearchInput";
 import { Link, useParams } from "react-router-dom";
-import { capitalizeFirstLetter, getDate } from "../../utils/utils";
+import { capitalizeFirstLetter, getDate } from "../../../utils/utils";
 
 export default function SearchForm({
   initialIsMini,

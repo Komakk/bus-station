@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { Trip } from "../types/types";
-import { getTime } from "../../utils/utils";
+import { Trip } from "../../types/types";
+import { getTime } from "../../../utils/utils";
 
-interface TicketProps {
+interface TripCardProps {
   trip: Trip;
 }
 
-export default function Ticket({ trip }: TicketProps) {
+export default function TripCard({ trip }: TripCardProps) {
   const navigate = useNavigate();
   const departureTime = new Date(trip.from.date);
   const arrivalTime = new Date(trip.to.date);

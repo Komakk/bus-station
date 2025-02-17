@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import QRCode, { QRCodeToDataURLOptions } from "qrcode";
-import { BookingType, Passenger } from "./types/types";
+import { BookingType, Passenger } from "../../types/types";
 import { toJpeg } from "html-to-image";
 
-export default function Booking() {
+export default function TicketPage() {
   const ref = useRef<HTMLImageElement>(null);
   const ticketImageRef = useRef<HTMLDivElement>(null);
 

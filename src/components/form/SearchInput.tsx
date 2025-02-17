@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import useDebounce from "../custom-hooks/useDebounce";
+import useDebounce from "../../custom-hooks/useDebounce";
 
 interface SearchInputProps {
   formValue: string;
@@ -74,13 +74,13 @@ export default function SearchInput({
         }}
         onClick={() => {
           setIsSearchSuggestionsVisible(true);
-          setFormValue("");    
+          setFormValue("");
           setSearchList([]);
         }}
         onBlur={() => {
           setTimeout(() => {
             setIsSearchSuggestionsVisible(false);
-             setFormValue(prevValue.current);
+            setFormValue(prevValue.current);
           }, 250);
         }}
       ></input>
@@ -108,7 +108,7 @@ export default function SearchInput({
                 className=" px-6 py-2 cursor-pointer border-b border-gray-300 hover:bg-gray-200"
                 key={item}
                 onClick={() => {
-                  prevValue.current = item;                  
+                  prevValue.current = item;
                   setFormValue(item);
                 }}
               >

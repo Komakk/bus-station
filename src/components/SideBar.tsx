@@ -1,4 +1,4 @@
-import VKWidget from "../VKWidget";
+import VKWidget from "./VKWidget";
 
 export default function SideBar() {
   return (

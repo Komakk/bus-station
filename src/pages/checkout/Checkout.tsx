@@ -1,12 +1,17 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import Navigation from "./components/Navigation";
-import PassengerSection from "./components/PassengerSection";
+import PassengerSection from "./PassengerSection";
 import { nanoid } from "nanoid";
-import { Passenger, Trip } from "./types/types";
+import { Passenger, Trip } from "../../types/types";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getDate, getDayAndMonth, getMinAndSec, getTime } from "../utils/utils";
-import useTimer from "./custom-hooks/useTimer";
-import Footer from "./components/Footer";
+import {
+  getDate,
+  getDayAndMonth,
+  getMinAndSec,
+  getTime,
+} from "../../../utils/utils";
+import useTimer from "../../custom-hooks/useTimer";
+import Footer from "../../components/Footer";
+import Navigation from "../../components/Navigation";
 
 export default function Checkout() {
   const [passengers, setPassengers] = useState<Passenger[]>([
@@ -26,7 +31,7 @@ export default function Checkout() {
 
   if (!location.state) throw new Error("No trip and ticket data");
 
-  const timer = useTimer(new Date().getTime() + 999 * 60);
+  const timer = useTimer(new Date().getTime() + 999 * 60 * 8);
 
   const trip: Trip = location.state.trip;
   const ticket: { id: string; paid: boolean } = location.state.ticket;
@@ -102,7 +107,7 @@ export default function Checkout() {
     fetch("http://localhost:8000/ticket", requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        navigate("/booking", {
+        navigate("/ticket", {
           replace: true,
           state: {
             ticketId: data.id,
@@ -147,6 +152,15 @@ export default function Checkout() {
   return (
     <>
       <Navigation />
+      <div className="w-full md:w-200 lg:w-220 xl:w-[1170px] md:mx-auto sticky top-0 h-14 z-40 flex items-center justify-end lg:hidden">
+        <span
+          className={`text-xl p-1 mr-3 border-2 ${
+            timer < 60000 && "bg-red-500 text-white"
+          }`}
+        >
+          {getMinAndSec(new Date(timer))}
+        </span>
+      </div>
       <main className=" relative text-gray-800 lg:top-14">
         <form
           className="md:w-200 lg:w-220 xl:w-[1170px] mx-auto lg:flex"
@@ -155,17 +169,7 @@ export default function Checkout() {
             postData();
           }}
         >
-          <div className="relative lg:w-3/4">
-            <div className=" mr-5 sticky top-0 left-full h-14 w-16 z-40 flex items-center justify-center lg:hidden">
-              <span
-                className={`text-xl p-1 border-2 ${
-                  timer < 6000 && "bg-red-500 text-white"
-                }`}
-              >
-                {getMinAndSec(new Date(timer))}
-              </span>
-            </div>
-
+          <div className=" lg:w-3/4">
             <h1 className=" p-3 text-2xl font-medium text-blue-800">
               Enter passengers and contacts
             </h1>
@@ -235,7 +239,7 @@ export default function Checkout() {
                   Your booking
                   <span
                     className={`hidden lg:inline px-1 border-2 float-right ${
-                      timer < 6000 && "bg-red-500 text-white"
+                      timer < 60000 && "bg-red-500 text-white"
                     }`}
                   >
                     {getMinAndSec(new Date(timer))}
@@ -258,11 +262,12 @@ export default function Checkout() {
                         </p>
                       </div>
                     </div>
-                    <div className=" py-1 flex flex-col justify-between z-10">
+                    <div className=" my-1  border-l "></div>
+                    <div className="relative py-1 flex flex-col justify-between -left-[6px]">
                       <div className=" border w-3 h-3 bg-slate-50 rounded-full"></div>
                       <div className=" border w-3 h-3 bg-slate-500 rounded-full"></div>
                     </div>
-                    <div className=" my-1 relative border-l -left-[6px]"></div>
+
                     <div className=" pl-3 flex flex-col justify-between">
                       <p>{trip.from.city}</p>
                       <p>{trip.to.city}</p>

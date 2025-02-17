@@ -1,6 +1,6 @@
 import { useState } from "react";
-import NavListItem from "./NavListItem";
-import SidebarListItem from "./SidebarNavListItem";
+import NavListItem from "./ui/NavListItem";
+import SidebarListItem from "./ui/SidebarNavListItem";
 import { Link } from "react-router-dom";
 
 const navList = [

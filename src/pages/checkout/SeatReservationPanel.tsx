@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Passenger, Seat, Trip } from "../types/types";
+
 import { useLocation } from "react-router-dom";
+import { Passenger, Seat, Trip } from "../../types/types";
 
 interface SeatReservationPanelProps {
   passenger: Passenger;

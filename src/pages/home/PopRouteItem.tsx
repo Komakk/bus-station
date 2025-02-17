@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getDate } from "../../utils/utils";
+import { getDate } from "../../../utils/utils";
 
 export default function PopRouteItem({
   from,

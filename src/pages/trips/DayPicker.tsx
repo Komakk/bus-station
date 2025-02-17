@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { getDate } from "../../utils/utils";
+import { getDate } from "../../../utils/utils";
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);

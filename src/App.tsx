@@ -5,11 +5,11 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import MainPage from "./MainPage";
+import MainPage from "./pages/home/MainPage";
 import Checkout from "./Checkout";
-import BusTripsPage from "./BusTripsPage";
+import BusTripsPage from "./pages/trips/BusTripsPage";
 import { useLayoutEffect } from "react";
-import Booking from "./Booking";
+import Booking from "./pages/ticket/TicketPage";
 
 export default function App() {
   const location = useLocation();

@@ -1,5 +1,5 @@
-import { getDate } from "../../utils/utils";
-import "./DateInput.css";
+import { getDate } from "../../../utils/utils";
+import "../../assets/DatePicker.css";
 
 interface DatePickerProps {
   dateValue: string;

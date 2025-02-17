@@ -1,4 +1,4 @@
-import YandexMap from "../YandexMap";
+import YandexMap from "./YandexMap";
 
 export default function Footer() {
   return (
@@ -52,10 +52,7 @@ export default function Footer() {
               settings may limit the functionality of the site.
             </p>
             <hr className=" mb-4" />
-            <p className=" text-gray-400">
-              © 2013-2024, ООО "Капитал"- Онлайн сервис продажи билетов На
-              автобус
-            </p>
+            <p className=" text-gray-400">© 2013-2025, Ltd. "Capital"</p>
           </div>
         </div>
       </div>

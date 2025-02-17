@@ -1,9 +1,9 @@
 import { useLocation } from "react-router-dom";
-import Footer from "./components/Footer";
-import Navigation from "./components/Navigation";
-import PopRouteItem from "./components/PopRouteItem";
-import SearchForm from "./components/SearchForm";
-import SideBar from "./components/SideBar";
+import Footer from "../../components/Footer";
+import Navigation from "../../components/Navigation";
+import PopRouteItem from "./PopRouteItem";
+import SearchForm from "../../components/form/SearchForm";
+import SideBar from "../../components/SideBar";
 import { useLayoutEffect } from "react";
 
 export default function MainPage() {

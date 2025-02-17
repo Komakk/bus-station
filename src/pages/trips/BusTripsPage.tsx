@@ -1,13 +1,13 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import DayPicker from "./components/DayPicker";
-import Footer from "./components/Footer";
-import Navigation from "./components/Navigation";
-import SearchForm from "./components/SearchForm";
-import SideBar from "./components/SideBar";
-import Ticket from "./components/Ticket";
+import DayPicker from "./DayPicker";
+import Footer from "../../components/Footer";
+import Navigation from "../../components/Navigation";
+import SearchForm from "../../components/form/SearchForm";
+import SideBar from "../../components/SideBar";
 import { useLocation, useParams } from "react-router-dom";
-import { capitalizeFirstLetter } from "../utils/utils";
-import { Trip } from "./types/types";
+import { capitalizeFirstLetter } from "../../../utils/utils";
+import { Trip } from "../../types/types";
+import TripCard from "./TripCard";
 
 export default function BusTripsPage() {
   const [trips, setTrips] = useState([]);
@@ -67,7 +67,7 @@ export default function BusTripsPage() {
               <span className="fa fa-arrow-down text-gray-500"></span>
             </section>
             {trips.length ? (
-              trips.map((trip: Trip, i) => <Ticket key={i} trip={trip} />)
+              trips.map((trip: Trip, i) => <TripCard key={i} trip={trip} />)
             ) : (
               <p className=" text-center text-lg">{`Trips ${capitalizeFirstLetter(
                 from
