@@ -48,7 +48,7 @@ export default function TicketPage() {
 
   return (
     <>
-      <main className=" relative top-14 text-gray-800">
+      <div className=" text-gray-800">
         <div
           ref={ticketImageRef}
           className=" relative mb-5 p-3 max-w-200 mx-auto bg-slate-50"
@@ -167,7 +167,7 @@ export default function TicketPage() {
             Download ticket
           </button>
         </div>
-      </main>
+      </div>
     </>
   );
 }

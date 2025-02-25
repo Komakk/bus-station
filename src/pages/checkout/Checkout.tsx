@@ -151,7 +151,7 @@ export default function Checkout() {
 
   return (
     <>
-      <div className="w-full md:w-200 lg:w-220 xl:w-[1170px] md:mx-auto sticky top-0 h-14 z-40 flex items-center justify-end lg:hidden">
+      <div className="w-full md:w-200 lg:w-220 xl:w-[1170px] md:mx-auto fixed top-0 h-14 z-40 flex items-center justify-end lg:hidden">
         <span
           className={`text-xl p-1 mr-3 border-2 ${
             timer < 60000 && "bg-red-500 text-white"
@@ -160,7 +160,7 @@ export default function Checkout() {
           {getMinAndSec(new Date(timer))}
         </span>
       </div>
-      <main className=" relative text-gray-800 lg:top-14">
+      <div className="  text-gray-800 ">
         <form
           className="md:w-200 lg:w-220 xl:w-[1170px] mx-auto lg:flex"
           onSubmit={(e) => {
@@ -340,7 +340,7 @@ export default function Checkout() {
             </div>
           </div>
         </form>
-      </main>
+      </div>
 
       {timer < 1000 && (
         <div className=" fixed top-0 left-0 w-full h-full z-50 backdrop-brightness-50 flex items-center justify-center">

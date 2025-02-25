@@ -5,6 +5,10 @@ import ErrorPage from "../pages/error/ErrorPage.tsx";
 import Checkout from "../pages/checkout/Checkout.tsx";
 import TicketPage from "../pages/ticket/TicketPage.tsx";
 import App from "../App.tsx";
+import TicketsPage from "../pages/ticket/TicketsPage.tsx";
+import Login from "../components/Login.tsx";
+import PrivateRoute from "./PrivateRoute.tsx";
+import Register from "../components/Register.tsx";
 
 const router = createBrowserRouter([
   {
@@ -27,8 +31,24 @@ const router = createBrowserRouter([
         path: "ticket",
         element: <TicketPage />,
       },
+      {
+        path: "tickets",
+        element: (
+          <PrivateRoute>
+            <TicketsPage />
+          </PrivateRoute>
+        ),
+      },
     ],
     errorElement: <ErrorPage />,
+  },
+  {
+    path: "login",
+    element: <Login />,
+  },
+  {
+    path: "register",
+    element: <Register />,
   },
 ]);
 

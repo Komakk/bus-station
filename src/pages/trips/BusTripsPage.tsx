@@ -38,45 +38,43 @@ export default function BusTripsPage() {
 
   return (
     <>
-      <main className=" relative top-14">
-        <div className=" bg-sky-800 text-white ">
-          <SearchForm initialIsMini={true} />
-        </div>
+      <div className=" bg-sky-800 text-white ">
+        <SearchForm initialIsMini={true} />
+      </div>
 
-        <div className="md:w-200 lg:w-220 xl:w-[1170px] mx-auto lg:flex">
-          <div className=" px-4 lg:w-3/4">
-            {currentDate && (
-              <section className=" py-4 flex justify-between">
-                <DayPicker
-                  dpDate={new Date(currentDate.getTime() - 24 * 60 * 60 * 1000)}
-                />
-                <span className=" px-3 py-1 text-xl text-sky-700">
-                  {currentDate.toDateString()}
-                </span>
-                <DayPicker
-                  dpDate={new Date(currentDate.getTime() + 24 * 60 * 60 * 1000)}
-                />
-              </section>
-            )}
-            <section className=" mb-2 flex justify-center items-center">
-              <span>Sort by:&nbsp;</span>
-              <button className=" text-sky-700">price</button>
-              <span>&nbsp;|&nbsp;</span>
-              <button className=" text-gray-500">time&nbsp;</button>
-              <span className="fa fa-arrow-down text-gray-500"></span>
+      <div className="md:w-200 lg:w-220 xl:w-[1170px] mx-auto lg:flex">
+        <div className=" px-4 lg:w-3/4">
+          {currentDate && (
+            <section className=" py-4 flex justify-between">
+              <DayPicker
+                dpDate={new Date(currentDate.getTime() - 24 * 60 * 60 * 1000)}
+              />
+              <span className=" px-3 py-1 text-xl text-sky-700">
+                {currentDate.toDateString()}
+              </span>
+              <DayPicker
+                dpDate={new Date(currentDate.getTime() + 24 * 60 * 60 * 1000)}
+              />
             </section>
-            {trips.length ? (
-              trips.map((trip: Trip, i) => <TripCard key={i} trip={trip} />)
-            ) : (
-              <p className=" text-center text-lg">{`Trips ${capitalizeFirstLetter(
-                from
-              )} - ${capitalizeFirstLetter(to)} not found`}</p>
-            )}
-            {}
-          </div>
-          <SideBar />
+          )}
+          <section className=" mb-2 flex justify-center items-center">
+            <span>Sort by:&nbsp;</span>
+            <button className=" text-sky-700">price</button>
+            <span>&nbsp;|&nbsp;</span>
+            <button className=" text-gray-500">time&nbsp;</button>
+            <span className="fa fa-arrow-down text-gray-500"></span>
+          </section>
+          {trips.length ? (
+            trips.map((trip: Trip, i) => <TripCard key={i} trip={trip} />)
+          ) : (
+            <p className=" text-center text-lg">{`Trips ${capitalizeFirstLetter(
+              from
+            )} - ${capitalizeFirstLetter(to)} not found`}</p>
+          )}
+          {}
         </div>
-      </main>
+        <SideBar />
+      </div>
     </>
   );
 }

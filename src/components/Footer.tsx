@@ -52,7 +52,9 @@ export default function Footer() {
               settings may limit the functionality of the site.
             </p>
             <hr className=" mb-4" />
-            <p className=" text-gray-400">© 2013-2025, Ltd. "Capital"</p>
+            <p className=" text-gray-400">
+              ©2025 Bus Station. All rights reserved.
+            </p>
           </div>
         </div>
       </div>

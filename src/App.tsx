@@ -14,7 +14,9 @@ export default function App() {
   return (
     <>
       <Navigation />
-      <Outlet />
+      <main className=" relative top-14">
+        <Outlet />
+      </main>
       <Footer />
     </>
   );

@@ -1,3 +1,8 @@
+interface FormData {
+  email: string;
+  password: string;
+}
+
 interface Seat {
   number: string;
   state: "free" | "occupied";
@@ -44,4 +49,4 @@ interface BookingType {
   };
 }
 
-export type { Seat, Trip, Passenger, BookingType };
+export type { FormData, Seat, Trip, Passenger, BookingType };
