@@ -28,8 +28,12 @@ const router = createBrowserRouter([
         element: <Checkout />,
       },
       {
-        path: "ticket",
-        element: <TicketPage />,
+        path: "tickets/:ticketId",
+        element: (
+          <PrivateRoute>
+            <TicketPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "tickets",

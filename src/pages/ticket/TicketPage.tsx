@@ -1,17 +1,16 @@
-import { useEffect, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import QRCode, { QRCodeToDataURLOptions } from "qrcode";
-import { BookingType, Passenger } from "../../types/types";
+import { Passenger, Ticket } from "../../types/types";
 import { toJpeg } from "html-to-image";
 
 export default function TicketPage() {
+  const [ticket, setTicket] = useState<Ticket | null>(null);
   const ref = useRef<HTMLImageElement>(null);
   const ticketImageRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const { ticketId, from, to, passengers, booking } = location.state;
-  const typifiedBooking: BookingType = booking;
+  const { ticketId } = useParams();
 
   function downloadTicketImage() {
     if (ticketImageRef.current === null) return;
@@ -46,6 +45,25 @@ export default function TicketPage() {
     });
   }, []);
 
+  useEffect(() => {
+    let ignore = false;
+
+    fetch(`http://localhost:8000/tickets/${ticketId}`)
+      .then((response) => response.json())
+      .then((ticket) => {
+        if (!ignore) {
+          setTicket(ticket);
+        }
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  console.log(ticket);
+
+  if (!ticket) return <div>Loading ...</div>;
   return (
     <>
       <div className=" text-gray-800">
@@ -61,14 +79,15 @@ export default function TicketPage() {
             className="mb-5 block mx-auto static sm:absolute sm:w-32 top-4 right-4"
           ></img>
           <p>
-            <b>Ticket Number:</b> {ticketId}
+            <b>Ticket Number:</b> {ticket?.id}
           </p>
           <p>
-            <b>Departure:</b> {from.city}{" "}
-            {String(from.date).split("T").join(" ")}
+            <b>Departure:</b> {ticket?.trip.from.city}{" "}
+            {String(ticket?.trip.from.date).split("T").join(" ")}
           </p>
           <p className="pb-1">
-            <b>Arrival:</b> {to.city} {String(to.date).split("T").join(" ")}
+            <b>Arrival:</b> {ticket?.trip.to.city}{" "}
+            {String(ticket?.trip.to.date).split("T").join(" ")}
           </p>
           <table className="w-full">
             <caption className="text-left">
@@ -82,7 +101,7 @@ export default function TicketPage() {
               </tr>
             </thead>
             <tbody className=" bg-gray-50">
-              {passengers.map((passenger: Passenger) => (
+              {ticket?.passengers.map((passenger: Passenger) => (
                 <tr key={passenger.id} className=" h-7 px-2 even:bg-gray-200">
                   <td className="pl-2">{`${passenger.firstname} ${passenger.lastname}`}</td>
                   <td>{passenger.type}</td>
@@ -92,35 +111,35 @@ export default function TicketPage() {
             </tbody>
           </table>
           <p className=" pt-5">
-            {`${typifiedBooking.adult.count} ${
-              typifiedBooking.adult.count > 1 ? "Adults" : "Adult"
+            {`${ticket?.booking.adult.count} ${
+              ticket?.booking.adult.count > 1 ? "Adults" : "Adult"
             }`}
             <span className=" float-right">
-              {typifiedBooking.adult.price}rub
+              {ticket.booking.adult.price}rub
             </span>
           </p>
           <div className=" border-t"></div>
           <p>
-            {`${typifiedBooking.child.count} ${
-              typifiedBooking.child.count > 1 ? "Children" : "Child"
+            {`${ticket.booking.child.count} ${
+              ticket.booking.child.count > 1 ? "Children" : "Child"
             }`}
             <span className=" float-right">
-              {typifiedBooking.child.price}rub
+              {ticket.booking.child.price}rub
             </span>
           </p>
           <div className="border-t">
             <p className="">
-              {typifiedBooking.luggage.count} Luggage
+              {ticket.booking.luggage.count} Luggage
               <span className=" float-right">
-                {typifiedBooking.luggage.price}rub
+                {ticket.booking.luggage.price}rub
               </span>
             </p>
           </div>
           <div className="border-t">
             <p className="">
-              {typifiedBooking.ensurance.count} Ensurance
+              {ticket.booking.ensurance.count} Ensurance
               <span className=" float-right">
-                {typifiedBooking.ensurance.price}rub
+                {ticket.booking.ensurance.price}rub
               </span>
             </p>
           </div>
@@ -132,7 +151,7 @@ export default function TicketPage() {
           <p className="py-3 text-2xl font-medium">
             Total
             <span className=" float-right">
-              {Object.values(typifiedBooking).reduce(
+              {Object.values(ticket.booking).reduce(
                 (prev, cur) => prev + cur.price,
                 0
               )}
@@ -158,7 +177,7 @@ export default function TicketPage() {
               navigate(-1);
             }}
           >
-            Go back to search
+            Go back
           </button>
           <button
             className=" px-4 py-2 w-40 bg-green-500"

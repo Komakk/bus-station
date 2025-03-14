@@ -2,11 +2,56 @@ import express from "express";
 import cors from "cors";
 import { popDestinations, destinations, trips } from "./constants.js";
 import { getDate, getTime } from "../utils/utils.js";
-import { nanoid } from "nanoid";
+import { customAlphabet } from "nanoid";
+
+let tickets = [
+  {
+    id: "4321",
+    paid: true,
+    trip: {
+      id: "t01",
+      from: { city: "Izhevsk", date: "2024-07-26T08:30" },
+      to: { city: "Votkinsk", date: "2024-07-26T10:00" },
+    },
+    passengers: [
+      {
+        id: "1a1a1a",
+        firstname: "John",
+        lastname: "Dee",
+        type: "Adult",
+        seat: "1",
+        luggage: false,
+        ensurance: false,
+      },
+    ],
+    contacts: { email: "am427m@yandex.ru", phone: "" },
+    booking: {
+      adult: {
+        count: 1,
+        price: 300,
+      },
+      child: {
+        count: 0,
+        price: 0,
+      },
+      luggage: {
+        count: 0,
+        price: 0,
+      },
+      ensurance: {
+        count: 0,
+        price: 0,
+      },
+    },
+    ordered: 1721964600000,
+  },
+];
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+const nanoid = customAlphabet("1234567890", 10);
 
 function updateDates(trips) {
   const now = new Date();
@@ -38,20 +83,22 @@ function createTicket() {
   return newTicket;
 }
 
-function editTicket({ ticket, tripId, passengers, contacts }) {
+function editTicket({ ticket, trip, passengers, contacts, booking }) {
   const newTicket = tickets.find((item) => item.id === ticket.id);
-  newTicket.tripId = tripId;
+  newTicket.trip = trip;
   newTicket.passengers = passengers.map((passenger) => {
     return {
       ...passenger,
       seat:
         passenger.seat === "any"
-          ? findSeat(tripId, ticket.id, passenger.id)
+          ? findSeat(trip.id, ticket.id, passenger.id)
           : passenger.seat,
     };
   });
   newTicket.contacts = contacts;
+  newTicket.booking = booking;
   newTicket.paid = true;
+  newTicket.ordered = Date.now();
   return newTicket;
 }
 
@@ -102,7 +149,6 @@ function setSeat(seat, ticketId, passengerId) {
 }
 
 const updatedTrips = updateDates(trips);
-let tickets = [];
 const popFromDestinations = popDestinations.map((item) => item.from);
 
 app.get("/getPopRoutes/:departure", (req, res) => {
@@ -183,6 +229,20 @@ app.post("/ticket", (req, res) => {
 
 app.put("/ticket", (req, res) => {
   const ticket = editTicket(req.body);
+  res.json(ticket);
+});
+
+app.get("/tickets/by-email/:email", (req, res) => {
+  const email = req.params.email;
+  const ticketsByEmail = tickets.filter(
+    (ticket) => ticket.contacts.email === email
+  );
+  res.json(ticketsByEmail);
+});
+
+app.get("/tickets/:ticketId", (req, res) => {
+  const ticketId = req.params.ticketId;
+  const ticket = tickets.find((ticket) => ticket.id === ticketId);
   res.json(ticket);
 });
 

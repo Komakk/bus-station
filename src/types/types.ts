@@ -3,6 +3,20 @@ interface FormData {
   password: string;
 }
 
+interface Ticket {
+  id: string;
+  paid: boolean;
+  trip: {
+    id: string;
+    from: { city: string; date: string };
+    to: { city: string; date: string };
+  };
+  passengers: Passenger[];
+  contacts: { email: string, phone: string };
+  booking: BookingType;
+  ordered: number
+}
+
 interface Seat {
   number: string;
   state: "free" | "occupied";
@@ -49,4 +63,4 @@ interface BookingType {
   };
 }
 
-export type { FormData, Seat, Trip, Passenger, BookingType };
+export type { FormData, Seat, Trip, Passenger, BookingType, Ticket };

@@ -10,8 +10,6 @@ import {
   getTime,
 } from "../../../utils/utils";
 import useTimer from "../../custom-hooks/useTimer";
-import Footer from "../../components/Footer";
-import Navigation from "../../components/Navigation";
 
 export default function Checkout() {
   const [passengers, setPassengers] = useState<Passenger[]>([
@@ -37,13 +35,6 @@ export default function Checkout() {
   const ticket: { id: string; paid: boolean } = location.state.ticket;
   const departureTime = new Date(trip.from.date);
   const arrivalTime = new Date(trip.to.date);
-
-  console.log(ticket);
-
-  // scroll to top of page after a page transition.
-  // useLayoutEffect(() => {
-  //   document.documentElement.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  // }, []);
 
   useEffect(() => {
     return () => {
@@ -95,9 +86,14 @@ export default function Checkout() {
   function postData() {
     const data = {
       ticket: ticket,
-      tripId: trip.id,
+      trip: {
+        id: trip.id,
+        from: trip.from,
+        to: trip.to,
+      },
       passengers: passengers,
       contacts: contacts,
+      booking: booking,
     };
     const requestOptions = {
       method: "PUT",
@@ -106,16 +102,9 @@ export default function Checkout() {
     };
     fetch("http://localhost:8000/ticket", requestOptions)
       .then((response) => response.json())
-      .then((data) => {
-        navigate("/ticket", {
+      .then((ticket) => {
+        navigate(`/tickets/${ticket.id}`, {
           replace: true,
-          state: {
-            ticketId: data.id,
-            from: trip.from,
-            to: trip.to,
-            passengers: data.passengers,
-            booking: booking,
-          },
         });
       });
   }
