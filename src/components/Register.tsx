@@ -14,11 +14,14 @@ export default function Register() {
   const onSubmit = async (data: FormData) => {
     //console.log(data);
     try {
-      await registerUser(data.email, data.password);
+      const response = await registerUser(data.email, data.password);
+      console.log(response);
+
       alert("User registered successfully");
       navigate("/");
     } catch (error) {
-      setMessage("Please provide a valid email and password");
+      const err = error as Error;
+      setMessage(err.message);
       console.error(error);
     }
   };

@@ -19,7 +19,7 @@ export default function SearchForm({
   const [toInputValue, settoInputValue] = useState(capitalizeFirstLetter(to));
   const [date, setDate] = useState(getDate(new Date()));
 
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
 
   const link = `/${fromInputValue}/${toInputValue}/${date}`.toLowerCase();
 
@@ -64,14 +64,17 @@ export default function SearchForm({
             )}
           </Link>
           {currentUser ? (
-            <button className=" bg-blue-950 px-4 py-3 ml-6 text-sm border cursor-pointer ">
+            <button
+              className=" bg-blue-950 px-4 py-3 ml-6 text-sm border cursor-pointer "
+              onClick={() => logout()}
+            >
               <i className=" pr-1 fa fa-sign-out"></i>
               Sign Out
             </button>
           ) : (
             <Link
               to={"/login"}
-              className=" bg-blue-950 px-4 py-3 ml-6 text-sm border cursor-pointer"
+              className=" inline-block bg-blue-950 px-4 py-3 ml-6 text-sm border cursor-pointer"
             >
               <i className=" pr-1 fa fa-sign-in"></i>
               Sign In

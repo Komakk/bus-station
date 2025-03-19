@@ -76,7 +76,12 @@ const navList = [
 export default function Navigation() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
+
+  function handleSignOut() {
+    logout();
+    setIsSidebarOpen(false);
+  }
 
   return (
     <>
@@ -126,13 +131,18 @@ export default function Navigation() {
               {currentUser.email}
             </p>
             <Link
-              className=" inline-block mb-1 hover:underline focus:font-semibold"
+              className=" inline-block mb-1 hover:underline hover:bg-blue-750 focus:font-semibold w-1/4"
               to={"/tickets"}
               onClick={() => setIsSidebarOpen(false)}
             >
               Tickets
             </Link>
-            <button className=" block hover:underline">Sign Out</button>
+            <button
+              className=" block hover:underline w-1/4 text-left"
+              onClick={handleSignOut}
+            >
+              Sign Out
+            </button>
           </div>
         ) : (
           <div className=" p-8 h-24 bg-blue-700 text-center text-white">
@@ -172,7 +182,7 @@ export default function Navigation() {
           <a className=" p-2 w-full block text-center bg-green-500 text-white cursor-pointer hover:bg-green-600">
             MOBILE APPLICATION
           </a>
-          <a className=" p-2 mt-1 w-full block text-center bg-yellow-500 text-white cursor-pointer hover:bg-green-700">
+          <a className=" p-2 mt-1 w-full block text-center bg-yellow-500 text-white cursor-pointer hover:bg-yellow-600">
             SUPPORT
           </a>
         </div>
