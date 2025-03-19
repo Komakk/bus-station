@@ -8,7 +8,7 @@ interface PrivateRouteProps {
 
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
   const { currentUser, loading } = useAuth();
-  console.log(currentUser, loading);
+  //console.log(currentUser, loading);
 
   if (loading) {
     return <div>Loading ...</div>;

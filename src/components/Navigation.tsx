@@ -2,6 +2,7 @@ import { useState } from "react";
 import NavListItem from "./ui/NavListItem";
 import SidebarListItem from "./ui/SidebarNavListItem";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const navList = [
   {
@@ -75,6 +76,8 @@ const navList = [
 export default function Navigation() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const { currentUser } = useAuth();
+
   return (
     <>
       <header className=" fixed z-10 bg-white w-full">
@@ -116,16 +119,42 @@ export default function Navigation() {
           isSidebarOpen ? "" : "hidden"
         }`}
       >
-        <div className=" p-8 h-24 bg-blue-700 text-center text-white">
-          <a className=" underline cursor-pointer">Sign in</a>
-          {` ${"\u00A0"} | ${"\u00A0"} `}
-          <a className=" underline cursor-pointer">Sign up</a>
-        </div>
+        {currentUser ? (
+          <div className=" p-2 h-24 bg-blue-700 text-white">
+            <p className=" mb-1">
+              <i className=" pr-1 fa fa-user text-lg" aria-hidden="true"></i>
+              {currentUser.email}
+            </p>
+            <Link
+              className=" inline-block mb-1 hover:underline focus:font-semibold"
+              to={"/tickets"}
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              Tickets
+            </Link>
+            <button className=" block hover:underline">Sign Out</button>
+          </div>
+        ) : (
+          <div className=" p-8 h-24 bg-blue-700 text-center text-white">
+            <Link to={"/login"} className=" underline cursor-pointer">
+              Sign in
+            </Link>
+            {` ${"\u00A0"} | ${"\u00A0"} `}
+            <Link to={"/register"} className=" underline cursor-pointer">
+              Sign up
+            </Link>
+          </div>
+        )}
+
         <div className=" py-4 px-5 border-b flex ">
-          <a className=" cursor-pointer hover:underline">
+          <Link
+            to={"/"}
+            className=" cursor-pointer hover:underline"
+            onClick={() => setIsSidebarOpen(false)}
+          >
             <p>Search trip</p>
             <p className=" text-xs text-gray-500">and buying tickets</p>
-          </a>
+          </Link>
         </div>
         <nav className=" py-4 px-5 pb-24">
           <ul>

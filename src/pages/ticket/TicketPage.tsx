@@ -31,6 +31,14 @@ export default function TicketPage() {
   }
 
   useEffect(() => {
+    fetch(`http://localhost:8000/tickets/${ticketId}`)
+      .then((response) => response.json())
+      .then((ticket) => {
+        setTicket(ticket);
+      });
+  }, []);
+
+  useEffect(() => {
     const options: QRCodeToDataURLOptions = {
       margin: 0,
       type: "image/jpeg",
@@ -38,28 +46,16 @@ export default function TicketPage() {
       width: 250,
     };
 
-    QRCode.toDataURL(ticketId, options, function (err, url) {
-      if (err) throw err;
+    QRCode.toDataURL(ticket?.id! || "0", options, function (err, url) {
+      if (err) {
+        console.log(ticketId);
+
+        throw err;
+      }
 
       if (ref.current) ref.current.src = url;
     });
-  }, []);
-
-  useEffect(() => {
-    let ignore = false;
-
-    fetch(`http://localhost:8000/tickets/${ticketId}`)
-      .then((response) => response.json())
-      .then((ticket) => {
-        if (!ignore) {
-          setTicket(ticket);
-        }
-      });
-
-    return () => {
-      ignore = true;
-    };
-  }, []);
+  }, [ticket]);
 
   console.log(ticket);
 

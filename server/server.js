@@ -237,7 +237,7 @@ app.get("/tickets/by-email/:email", (req, res) => {
   const ticketsByEmail = tickets.filter(
     (ticket) => ticket.contacts.email === email
   );
-  res.json(ticketsByEmail);
+  res.json(ticketsByEmail.reverse());
 });
 
 app.get("/tickets/:ticketId", (req, res) => {

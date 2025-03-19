@@ -3,6 +3,7 @@ import DatePicker from "./DatePicker";
 import SearchInput from "./SearchInput";
 import { Link, useParams } from "react-router-dom";
 import { capitalizeFirstLetter, getDate } from "../../../utils/utils";
+import { useAuth } from "../../context/AuthContext";
 
 export default function SearchForm({
   initialIsMini,
@@ -17,6 +18,8 @@ export default function SearchForm({
   );
   const [toInputValue, settoInputValue] = useState(capitalizeFirstLetter(to));
   const [date, setDate] = useState(getDate(new Date()));
+
+  const { currentUser } = useAuth();
 
   const link = `/${fromInputValue}/${toInputValue}/${date}`.toLowerCase();
 
@@ -45,13 +48,35 @@ export default function SearchForm({
           Buy ticket
         </h2>
         <div className=" hidden lg:block">
-          <a className=" bg-yellow-500 px-4 py-3 text-sm border cursor-pointer">
-            Sign Up
-          </a>
-          <a className=" bg-blue-950 px-4 py-3 ml-6 text-sm border cursor-pointer">
-            <i className=" pr-1 fa fa-sign-in"></i>
-            Sign In
-          </a>
+          <Link
+            to={currentUser ? "/tickets" : "/register"}
+            className={`inline-block ${
+              currentUser ? "bg-blue-950" : "bg-yellow-500"
+            } px-4 py-3 text-sm border cursor-pointer `}
+          >
+            {currentUser ? (
+              <span>
+                <i className=" pr-1 fa fa-user" aria-hidden="true"></i>
+                Account
+              </span>
+            ) : (
+              "Sign Up"
+            )}
+          </Link>
+          {currentUser ? (
+            <button className=" bg-blue-950 px-4 py-3 ml-6 text-sm border cursor-pointer ">
+              <i className=" pr-1 fa fa-sign-out"></i>
+              Sign Out
+            </button>
+          ) : (
+            <Link
+              to={"/login"}
+              className=" bg-blue-950 px-4 py-3 ml-6 text-sm border cursor-pointer"
+            >
+              <i className=" pr-1 fa fa-sign-in"></i>
+              Sign In
+            </Link>
+          )}
         </div>
       </div>
       <form className={`${isMini ? "hidden" : "block"} lg:block lg:text-sm`}>
