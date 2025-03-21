@@ -22,7 +22,7 @@ export default function TicketsPage() {
     };
   }, []);
 
-  if (tickets.length === 0) return <div>No orders found</div>;
+  if (tickets.length === 0) return <div>No tickets found</div>;
 
   return (
     <div className=" container mx-auto p-6">

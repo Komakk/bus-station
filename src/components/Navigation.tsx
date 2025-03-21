@@ -125,27 +125,24 @@ export default function Navigation() {
         }`}
       >
         {currentUser ? (
-          <div className=" p-2 h-24 bg-blue-700 text-white">
-            <p className=" mb-1">
-              <i className=" pr-1 fa fa-user text-lg" aria-hidden="true"></i>
+          <div className=" p-2 h-24 bg-sky-800 text-white">
+            <p className=" mb-4 text-lg">
+              <i
+                className=" pr-1 fa fa-user-circle text-2xl"
+                aria-hidden="true"
+              ></i>
               {currentUser.email}
             </p>
-            <Link
-              className=" inline-block mb-1 hover:underline hover:bg-blue-750 focus:font-semibold w-1/4"
-              to={"/tickets"}
-              onClick={() => setIsSidebarOpen(false)}
-            >
-              Tickets
-            </Link>
+
             <button
-              className=" block hover:underline w-1/4 text-left"
+              className=" block underline text-left"
               onClick={handleSignOut}
             >
               Sign Out
             </button>
           </div>
         ) : (
-          <div className=" p-8 h-24 bg-blue-700 text-center text-white">
+          <div className=" p-8 h-24 bg-sky-800 text-center text-white">
             <Link to={"/login"} className=" underline cursor-pointer">
               Sign in
             </Link>
@@ -156,15 +153,24 @@ export default function Navigation() {
           </div>
         )}
 
-        <div className=" py-4 px-5 border-b flex ">
+        <div className=" py-4 px-5 border-b  ">
           <Link
             to={"/"}
-            className=" cursor-pointer hover:underline"
+            className="block cursor-pointer hover:underline"
             onClick={() => setIsSidebarOpen(false)}
           >
             <p>Search trip</p>
             <p className=" text-xs text-gray-500">and buying tickets</p>
           </Link>
+          {currentUser && (
+            <Link
+              className="block pt-4 cursor-pointer hover:underline"
+              to={"/tickets"}
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              Show my tickets
+            </Link>
+          )}
         </div>
         <nav className=" py-4 px-5 pb-24">
           <ul>

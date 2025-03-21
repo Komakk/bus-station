@@ -15,7 +15,7 @@ export default function Login() {
     try {
       await loginUser(data.email, data.password);
       alert("Login successful");
-      navigate("/");
+      navigate(-1);
     } catch (error) {
       setMessage("Please provide a valid email and password");
       console.error(error);
