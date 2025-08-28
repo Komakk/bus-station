@@ -23,14 +23,7 @@ const router = createBrowserRouter([
         path: ":from/:to/:date",
         element: <BusTripsPage />,
       },
-      {
-        path: "checkout",
-        element: (
-          <PrivateRoute>
-            <Checkout />
-          </PrivateRoute>
-        ),
-      },
+
       {
         path: "tickets/:ticketId",
         element: (
@@ -57,6 +50,14 @@ const router = createBrowserRouter([
   {
     path: "register",
     element: <Register />,
+  },
+  {
+    path: "checkout",
+    element: (
+      <PrivateRoute>
+        <Checkout />
+      </PrivateRoute>
+    ),
   },
 ]);
 
